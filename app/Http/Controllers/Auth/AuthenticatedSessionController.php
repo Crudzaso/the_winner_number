@@ -29,33 +29,53 @@ class AuthenticatedSessionController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            // Obtener el usuario autenticado desde Google
             $googleUser = Socialite::driver('google')->stateless()->user();
-
-            // Buscar el usuario en la base de datos
             $user = User::where('email', $googleUser->getEmail())->first();
 
-            // Si el usuario no existe, crear un nuevo usuario
             if (!$user) {
                 $user = User::create([
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt('random_password')  // Se requiere un password pero no se usará
+                    'password' => bcrypt('random_password')
                 ]);
             }
 
-            // Iniciar sesión al usuario
             Auth::login($user);
 
-            // Redirigir al usuario a la página de inicio u otra página deseada
+            // Enviar notificación a Discord
+            $this->sendDiscordNotification("Usuario {$user->name} ha iniciado sesión con Google.");
+
             return redirect()->intended('/dashboard');
         } catch (Exception $e) {
-            // Manejo de errores
             return redirect('/login')->withErrors(['error' => 'Error en la autenticación de Google.']);
         }
     }
 
+    /**
+     * Envía un mensaje a un webhook de Discord.
+     *
+     * @param string $message
+     * @return void
+     */
+    public function sendDiscordNotification($message)
+    {
+        $webhookUrl = 'https://discord.com/api/webhooks/1301003658829369364/5GrGrrjS24dWsQZj03YFOnE5LE1duNNcTFTX4Y71rcTS4rV2a_TGYqRbJSWALX-yny6J';
 
-    //
+        $payload = [
+            'content' => $message,
+        ];
+
+        // Enviar solicitud HTTP POST al webhook de Discord
+        try {
+            $client = new \GuzzleHttp\Client();
+            $client->post($webhookUrl, [
+                'json' => $payload,
+            ]);
+        } catch (Exception $e) {
+            // Manejo de errores
+            \Log::error('Error al enviar mensaje a Discord: ' . $e->getMessage());
+        }
+    }
+
 }
