@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleGoogleCallback()
+        public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
@@ -46,85 +46,78 @@ class AuthenticatedSessionController extends Controller
 
             Auth::login($user);
 
-                // Enviar notificación a Discord con el mensaje personalizado
-            $companyName = "The winner number";
-            $logoUrl = asset('storage/images/project_brand.png');  // Reemplaza con el enlace a tu logo
-            $loginMethod = "Google";
-            $userId = $user->id;
+            // Información para el mensaje de notificación
+            $companyName = " The Winner Number ";
+            $logoUrl = 'https://private-user-images.githubusercontent.com/116232866/382150624-2fb0a0cf-722c-4f79-8310-36d7b295ac61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzA3NTcyNDQsIm5iZiI6MTczMDc1Njk0NCwicGF0aCI6Ii8xMTYyMzI4NjYvMzgyMTUwNjI0LTJmYjBhMGNmLTcyMmMtNGY3OS04MzEwLTM2ZDdiMjk1YWM2MS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTEwNFQyMTQ5MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MjRhN2E1OGMxYTBiOWJmZGIzM2U0YjY4NmZhYzcwNjQyNzM1ZmU4ZTQzN2VjZDIzNDdiNGM1MjA5ZTA3MTVkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.G_OFBF5TidqPnesPMYmZTjXbp7behpFnhABy9EHXUgo';
+            $authMethod = "Google";
+            $userId =  $user->id;
             $userName = $user->name;
             $userEmail = $user->email;
-            $loginDate = now()->format('Y-m-d H:i:s');
-            $notificationMessage = "El usuario ha iniciado sesión correctamente.";
+            $date = now()->format('Y-m-d H:i:s');
+            $notificationMessage = "🎉 El usuario ha iniciado sesión correctamente.";
 
-
-            $message = "**{$companyName}**\n";
-            $message .= "**Logo:** ![Logo]({$logoUrl})\n";
-            $message .= "**Método de Inicio de Sesión:** {$loginMethod}\n";
-            $message .= "**ID del Usuario:** {$userId}\n";
-            $message .= "**Nombre del Usuario:** {$userName}\n";
-            $message .= "**Correo Electrónico:** {$userEmail}\n";
-            $message .= "**Fecha de Inicio de Sesión:** {$loginDate}\n";
-            $message .= "**Mensaje:** {$notificationMessage}";
-
-            // Llamar a sendDiscordNotification con todos los parámetros requeridos
-        $this->sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage);
-
+            // Mensaje de Discord
+            $this->sendDiscordNotification(
+                $companyName,
+                $logoUrl,
+                $authMethod,
+                $userId,
+                $userName,
+                $userEmail,
+                $date,
+                $notificationMessage
+            );
 
             return redirect()->intended('/dashboard');
         } catch (Exception $e) {
-            return redirect('/login')->withErrors(['error' => 'Error en la autenticación de Google.']);
-            }
+            return redirect('/login')->withErrors(['error' => '⚠️ Error en la autenticación de Google.']);
+        }
     }
 
-    /**
-     * Envía un mensaje a un webhook de Discord.
-     *
-     * @param string $message
-     * @return void
-     */
     public function sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage)
     {
         $message = [
             'embeds' => [
                 [
-                    'title' => "Notificación de Inicio de Sesión",
+                    'title' => "🔔 Notificación de Inicio de Sesión",
                     'color' => 7506394,
-                    'thumbnail' => [ // Esta es la clave para mostrar la imagen
-                    'url' => $logoUrl,
+                    'thumbnail' => [
+                        'url' =>  $logoUrl
+
                     ],
                     'fields' => [
                         [
-                            'name' => "Nombre de la Empresa",
-                            'value' => $companyName,
+                            'name' => "Equipo",
+                            'value' => "🏆" . $companyName . "🏆",
                             'inline' => true,
                         ],
                         [
-                            'name' => "Método de Autenticación",
-                            'value' => $authMethod,
+                            'name' => "🔒 Método de Autenticación",
+                            'value' => "🔑 " . $authMethod,
                             'inline' => true,
                         ],
                         [
                             'name' => "ID del Usuario",
-                            'value' => $userId,
+                            'value' => "🆔 " . $userId,
                             'inline' => true,
                         ],
                         [
-                            'name' => "Nombre del Usuario",
+                            'name' => "👤 Nombre del Usuario",
                             'value' => $userName,
                             'inline' => true,
                         ],
                         [
-                            'name' => "Correo Electrónico",
+                            'name' => "📧 Correo Electrónico",
                             'value' => $userEmail,
                             'inline' => true,
                         ],
                         [
-                            'name' => "Fecha",
+                            'name' => "📅 Fecha",
                             'value' => $date,
                             'inline' => true,
                         ],
                         [
-                            'name' => "Mensaje",
+                            'name' => "💬 Mensaje",
                             'value' => $notificationMessage,
                             'inline' => false,
                         ],
@@ -150,5 +143,4 @@ class AuthenticatedSessionController extends Controller
             \Log::error('Discord webhook URL no está configurada en el archivo .env');
         }
     }
-
 }
