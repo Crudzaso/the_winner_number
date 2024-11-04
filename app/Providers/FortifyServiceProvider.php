@@ -46,7 +46,7 @@ class FortifyServiceProvider extends ServiceProvider
 
                 // Información para la notificación
                 $companyName = "The winner number";
-                $logoUrl = "storage\app\public\images\project_brand.png"; // Puedes usar un enlace de imagen
+                $logoUrl = asset('storage/images/project_brand.png'); // Puedes usar un enlace de imagen
                 $authMethod = "Usuario"; // O "Google" si es el caso
                 $userId = $user->id;
                 $userName = $user->name;

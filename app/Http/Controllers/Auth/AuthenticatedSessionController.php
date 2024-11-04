@@ -47,17 +47,18 @@ class AuthenticatedSessionController extends Controller
             Auth::login($user);
 
                 // Enviar notificación a Discord con el mensaje personalizado
-            $companyName = "Tu Empresa";
-            $companyLogo = "storage\app\public\images\project_brand.png";  // Reemplaza con el enlace a tu logo
+            $companyName = "The winner number";
+            $logoUrl = asset('storage/images/project_brand.png');  // Reemplaza con el enlace a tu logo
             $loginMethod = "Google";
             $userId = $user->id;
             $userName = $user->name;
             $userEmail = $user->email;
-            $loginDate = Carbon::now()->format('Y-m-d H:i:s');
+            $loginDate = now()->format('Y-m-d H:i:s');
             $notificationMessage = "El usuario ha iniciado sesión correctamente.";
 
+
             $message = "**{$companyName}**\n";
-            $message .= "**Logo:** ![Logo]({$companyLogo})\n";
+            $message .= "**Logo:** ![Logo]({$logoUrl})\n";
             $message .= "**Método de Inicio de Sesión:** {$loginMethod}\n";
             $message .= "**ID del Usuario:** {$userId}\n";
             $message .= "**Nombre del Usuario:** {$userName}\n";
@@ -81,22 +82,20 @@ class AuthenticatedSessionController extends Controller
      * @param string $message
      * @return void
      */
-        public function sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage)
+    public function sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage)
     {
         $message = [
             'embeds' => [
                 [
                     'title' => "Notificación de Inicio de Sesión",
-                    'color' => 7506394, // Color del mensaje (puedes cambiarlo)
+                    'color' => 7506394,
+                    'thumbnail' => [ // Esta es la clave para mostrar la imagen
+                    'url' => $logoUrl,
+                    ],
                     'fields' => [
                         [
                             'name' => "Nombre de la Empresa",
                             'value' => $companyName,
-                            'inline' => true,
-                        ],
-                        [
-                            'name' => "Logo",
-                            'value' => $logoUrl,
                             'inline' => true,
                         ],
                         [
@@ -134,10 +133,22 @@ class AuthenticatedSessionController extends Controller
             ],
         ];
 
-        $webhookUrl = 'TU_WEBHOOK_URL_DE_DISCORD';
+        $webhookUrl = "https://discord.com/api/webhooks/1301003658829369364/5GrGrrjS24dWsQZj03YFOnE5LE1duNNcTFTX4Y71rcTS4rV2a_TGYqRbJSWALX-yny6J";
 
-        // Envía la solicitud al webhook de Discord
-        Http::post($webhookUrl, $message);
+        if ($webhookUrl) {
+            $response = Http::post($webhookUrl, $message);
+
+            if ($response->failed()) {
+                \Log::error('Error al enviar la notificación a Discord:', [
+                    'response' => $response->body(),
+                    'status' => $response->status(),
+                ]);
+            } else {
+                \Log::info('Notificación enviada a Discord con éxito.');
+            }
+        } else {
+            \Log::error('Discord webhook URL no está configurada en el archivo .env');
+        }
     }
 
 }
