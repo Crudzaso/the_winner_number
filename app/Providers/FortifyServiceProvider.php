@@ -37,20 +37,37 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+                // En FortifyServiceProvider.php
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
 
             if ($user && \Hash::check($request->password, $user->password)) {
-            Auth::login($user);
+                Auth::login($user);
 
-            // Envía la notificación de Discord aquí
-            (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->sendDiscordNotification("Usuario {$user->name} ha iniciado sesión con credenciales.");
+                // Información para la notificación
+                $companyName = "The winner number";
+                $logoUrl = 'https://private-user-images.githubusercontent.com/116232866/382150624-2fb0a0cf-722c-4f79-8310-36d7b295ac61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzA3NTcyNDQsIm5iZiI6MTczMDc1Njk0NCwicGF0aCI6Ii8xMTYyMzI4NjYvMzgyMTUwNjI0LTJmYjBhMGNmLTcyMmMtNGY3OS04MzEwLTM2ZDdiMjk1YWM2MS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTEwNFQyMTQ5MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MjRhN2E1OGMxYTBiOWJmZGIzM2U0YjY4NmZhYzcwNjQyNzM1ZmU4ZTQzN2VjZDIzNDdiNGM1MjA5ZTA3MTVkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.G_OFBF5TidqPnesPMYmZTjXbp7behpFnhABy9EHXUgo';
+                $authMethod = "Usuario"; // O "Google" si es el caso
+                $userId = $user->id;
+                $userName = $user->name;
+                $userEmail = $user->email;
+                $date = now()->format('Y-m-d H:i:s'); // Fecha actual
+                $notificationMessage = "Usuario ha iniciado sesión exitosamente.";
+
+                (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->sendDiscordNotification(
+                    $companyName,
+                    $logoUrl,
+                    $authMethod,
+                    $userId,
+                    $userName,
+                    $userEmail,
+                    $date,
+                    $notificationMessage
+                );
 
                 return $user;
             }
         });
-
-
 
 
         RateLimiter::for('login', function (Request $request) {
