@@ -37,20 +37,37 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+                // En FortifyServiceProvider.php
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
 
             if ($user && \Hash::check($request->password, $user->password)) {
-            Auth::login($user);
+                Auth::login($user);
 
-            // Envía la notificación de Discord aquí
-            (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->sendDiscordNotification("Usuario {$user->name} ha iniciado sesión con credenciales.");
+                // Información para la notificación
+                $companyName = "The winner number";
+                $logoUrl = "storage\app\public\images\project_brand.png"; // Puedes usar un enlace de imagen
+                $authMethod = "Usuario"; // O "Google" si es el caso
+                $userId = $user->id;
+                $userName = $user->name;
+                $userEmail = $user->email;
+                $date = now()->format('Y-m-d H:i:s'); // Fecha actual
+                $notificationMessage = "Usuario ha iniciado sesión exitosamente.";
+
+                (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->sendDiscordNotification(
+                    $companyName,
+                    $logoUrl,
+                    $authMethod,
+                    $userId,
+                    $userName,
+                    $userEmail,
+                    $date,
+                    $notificationMessage
+                );
 
                 return $user;
             }
         });
-
-
 
 
         RateLimiter::for('login', function (Request $request) {

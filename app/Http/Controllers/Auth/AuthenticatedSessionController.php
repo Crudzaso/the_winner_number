@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -43,13 +46,33 @@ class AuthenticatedSessionController extends Controller
 
             Auth::login($user);
 
-            // Enviar notificación a Discord
-            $this->sendDiscordNotification("Usuario {$user->name} ha iniciado sesión con Google.");
+                // Enviar notificación a Discord con el mensaje personalizado
+            $companyName = "Tu Empresa";
+            $companyLogo = "storage\app\public\images\project_brand.png";  // Reemplaza con el enlace a tu logo
+            $loginMethod = "Google";
+            $userId = $user->id;
+            $userName = $user->name;
+            $userEmail = $user->email;
+            $loginDate = Carbon::now()->format('Y-m-d H:i:s');
+            $notificationMessage = "El usuario ha iniciado sesión correctamente.";
+
+            $message = "**{$companyName}**\n";
+            $message .= "**Logo:** ![Logo]({$companyLogo})\n";
+            $message .= "**Método de Inicio de Sesión:** {$loginMethod}\n";
+            $message .= "**ID del Usuario:** {$userId}\n";
+            $message .= "**Nombre del Usuario:** {$userName}\n";
+            $message .= "**Correo Electrónico:** {$userEmail}\n";
+            $message .= "**Fecha de Inicio de Sesión:** {$loginDate}\n";
+            $message .= "**Mensaje:** {$notificationMessage}";
+
+            // Llamar a sendDiscordNotification con todos los parámetros requeridos
+        $this->sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage);
+
 
             return redirect()->intended('/dashboard');
         } catch (Exception $e) {
             return redirect('/login')->withErrors(['error' => 'Error en la autenticación de Google.']);
-        }
+            }
     }
 
     /**
@@ -58,24 +81,63 @@ class AuthenticatedSessionController extends Controller
      * @param string $message
      * @return void
      */
-    public function sendDiscordNotification($message)
+        public function sendDiscordNotification($companyName, $logoUrl, $authMethod, $userId, $userName, $userEmail, $date, $notificationMessage)
     {
-        $webhookUrl = 'https://discord.com/api/webhooks/1301003658829369364/5GrGrrjS24dWsQZj03YFOnE5LE1duNNcTFTX4Y71rcTS4rV2a_TGYqRbJSWALX-yny6J';
-
-        $payload = [
-            'content' => $message,
+        $message = [
+            'embeds' => [
+                [
+                    'title' => "Notificación de Inicio de Sesión",
+                    'color' => 7506394, // Color del mensaje (puedes cambiarlo)
+                    'fields' => [
+                        [
+                            'name' => "Nombre de la Empresa",
+                            'value' => $companyName,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Logo",
+                            'value' => $logoUrl,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Método de Autenticación",
+                            'value' => $authMethod,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "ID del Usuario",
+                            'value' => $userId,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Nombre del Usuario",
+                            'value' => $userName,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Correo Electrónico",
+                            'value' => $userEmail,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Fecha",
+                            'value' => $date,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "Mensaje",
+                            'value' => $notificationMessage,
+                            'inline' => false,
+                        ],
+                    ],
+                ],
+            ],
         ];
 
-        // Enviar solicitud HTTP POST al webhook de Discord
-        try {
-            $client = new \GuzzleHttp\Client();
-            $client->post($webhookUrl, [
-                'json' => $payload,
-            ]);
-        } catch (Exception $e) {
-            // Manejo de errores
-            \Log::error('Error al enviar mensaje a Discord: ' . $e->getMessage());
-        }
+        $webhookUrl = 'TU_WEBHOOK_URL_DE_DISCORD';
+
+        // Envía la solicitud al webhook de Discord
+        Http::post($webhookUrl, $message);
     }
 
 }
