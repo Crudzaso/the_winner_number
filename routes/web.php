@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,3 +28,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+// Ruta para redirigir a Google
+Route::get('auth/google', [AuthenticatedSessionController::class, 'redirectToGoogle'])->name('auth.google');
+
+// Ruta para manejar la respuesta de Google
+Route::get('auth/google/callback', [AuthenticatedSessionController::class, 'handleGoogleCallback']);
