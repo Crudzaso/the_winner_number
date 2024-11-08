@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Raffle;
+use App\Http\Requests\RaffleRequest;
 
 class RaffleController extends Controller
 {
@@ -27,7 +28,7 @@ class RaffleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RaffleRequest $request)
     {
         $raffle = new Raffle($request->all());
         $raffle->user_id = Auth::id();
@@ -57,7 +58,7 @@ class RaffleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RaffleRequest $request, string $id)
     {
         $raffle = Raffle::find($id);
         $raffle->update($request->all());
@@ -72,6 +73,6 @@ class RaffleController extends Controller
         $raffle = Raffle::find($id);
         $raffle -> status = false;
         $raffle->save();
-        return back();
+        return back()->with('success', 'Raffle deleted successfully.');
     }
 }

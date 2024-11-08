@@ -7,9 +7,16 @@
     <title>Document</title>
 </head>
 <body>
+    @if (Session::get('success'))
+        <div>
+            <p id='message'>
+                {{ Session::get('success') }}
+            </p>
+        </div>
+    @endif
     <div>
         <a href="{{ route('raffle.create') }}">crear rifa</a>
-        @foreach($raffles as $raffle)
+        @forelse($raffles as $raffle)
             <div>
                 <h1>{{ $raffle->name }}</h1>
                 <p>{{ $raffle->price }}</p>
@@ -24,7 +31,18 @@
                     <button type="submit">eliminar</button>
                 </form>
             </div>
-        @endforeach
+        @empty
+            <h2>No hay datos que mostrar</h2>
+        @endforelse
     </div>
+
+    <script>
+        setTimeout(() => {
+            const message = document.getElementById('message');
+            if (message) {
+                message.style.display = 'none';
+            }
+        }, 3000);
+    </script>
 </body>
 </html>
