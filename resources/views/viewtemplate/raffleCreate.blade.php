@@ -8,7 +8,6 @@
 </head>
 <body>
     @php
-        // Asignar el método y la ruta de acuerdo con si estamos editando o creando
         if (isset($raffle)) {
             $method = 'PUT';
             $route = route('raffle.update', $raffle->id);
@@ -25,15 +24,39 @@
         @endif
         <label for="name">nombre</label>
         <input type="text" name="name" value="{{ isset($raffle) ? $raffle->name : null }}">
+        @error('name')
+            <p class='error'>Error en el campo de nombre</p>
+        @enderror
         <label for="price">precio</label>
         <input type="text" name="price" value="{{ isset($raffle) ? $raffle->price : null}}">
+        @error('price')
+            <p class='error'>Error en el campo de precio</p>
+        @enderror
         <label for="start_date">Fecha de inicio</label>
         <input type="date" name="start_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->start_date)->format('Y-m-d') : '' }}">
+        @error('start_date')
+            <p class='error'>Error en el campo de Fecha</p>
+        @enderror
         <label for="closing_date">fecha de fin</label>
         <input type="date" name="closing_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->closing_date)->format('Y-m-d') : '' }}">
+        @error('closing_date')
+            <p class='error'>Error en el campo de fecha de cierre esta debe ser posterior a la fecha de inicio</p>
+        @enderror
         <label for="award">premio</label>
         <input type="text" name="award" value="{{ isset($raffle) ? $raffle->award : null}}">
+        @error('award')
+            <p class='error'>Error en el campo de premio</p>
+        @enderror
         <button type="submit">{{ isset($raffle) ? 'Actualizar' : 'Crear' }}</button>
     </form>
+
+    <script>
+        setTimeout(() => {
+            const messages = document.getElementsByClassName('error');
+            for (let i = 0; i < messages.length; i++) {
+                messages[i].style.display = 'none';
+            }
+        }, 3000);
+    </script>
 </body>
 </html>
