@@ -9,10 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use app\Models\raffle;
+use app\Models\purchase;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+    use HasRoles;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -29,6 +33,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',
     ];
 
     /**
@@ -63,5 +68,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    public function raffles():HasMany
+    {
+        return $this->hasMany(Raffle::class);
+    }
+
+    public function purchases():HasMany
+    {
+        return $this->hasMany(Purchase::class);
     }
 }

@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
     }
 
     /**
@@ -33,16 +33,16 @@ class AuthenticatedSessionController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-            $user = User::where('email', $googleUser->getEmail())->first();
 
-            if (!$user) {
-                $user = User::create([
-                    'name' => $googleUser->getName(),
-                    'email' => $googleUser->getEmail(),
-                    'google_id' => $googleUser->getId(),
-                    'password' => bcrypt('random_password')
-                ]);
-            }
+            $user = User::updateOrCreate([
+                'google_id' => $googleUser->id,
+            ],[
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'google_id' => $googleUser->id,
+            ]);
+
+            $googleUser = null;
 
             Auth::login($user);
 
