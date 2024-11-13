@@ -31,7 +31,7 @@ Route::get('/auth/google', [AuthenticatedSessionController::class, 'redirectToGo
 // Ruta para manejar la respuesta de Google
 Route::get('/auth/google/callback', [AuthenticatedSessionController::class, 'handleGoogleCallback']);
 
-Route::view('/view','viewtemplate.viewlogin');
+Route::view('/view','viewtemplate.viewlogin')->name('view.viewlogin');
 Route::view('/viewlayout','viewtemplate.viewlayout');
 Route::get('/raffles', [RaffleController::class, 'index'])->name('raffle.index');
 Route::get('/raffles/create',[RaffleController::class, 'create'])->name('raffle.create');
