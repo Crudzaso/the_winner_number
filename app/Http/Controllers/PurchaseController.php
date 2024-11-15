@@ -60,27 +60,9 @@ class PurchaseController extends Controller
         return $this->errorServices->handleError(function()use($id){return $this->purchaseServices->showServices($id);});
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function sales()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(PurchaseRequest $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        dd('hola mundo');
+        return $this->errorServices->handleError(function(){return $this->purchaseServices->salesServices();});
     }
 }

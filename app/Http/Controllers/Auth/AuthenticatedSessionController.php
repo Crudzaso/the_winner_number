@@ -54,8 +54,10 @@ class AuthenticatedSessionController extends Controller
                 'google_id' => $googleUser->id,
             ]);
 
-            //$user->assignRole('participant');
-
+            if ($user->getRoleNames()->isEmpty()) {
+                $user->assignRole('participant');
+            }
+            
             if ($user->status == false) {
                 return redirect('/login')->withErrors('error', '⚠️ El usuario ha sido desactivado. Por favor contacte al administrador.');
             }

@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
         return [
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:100',
             'phone_number' => ['required', 'string', 'max:15', Rule::unique('users')->ignore($this->route('user'))],
             'date_of_birth' => 'required|date|before:' . now()->subYears(18)->toDateString(),
             'identification_number' => ['required','string','max:20',Rule::unique('users')->ignore($this->route('user'))],

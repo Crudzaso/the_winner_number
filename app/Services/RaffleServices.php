@@ -21,7 +21,27 @@ class RaffleServices
 
     public function indexServices()
     {
-        $raffles = Raffle::with('user')->where('status',true)->paginate(10);
+        $user = Auth::user();        
+        $raffles = Raffle::with('user')->paginate(10);
+
+        if($user->getRoleName() != 'admin') {
+            $raffles->where('status',true)->paginate(10);
+        }
+        
+        return view('viewtemplate.raffles', compact('raffles'));
+
+    }
+
+    public function myindexServices()
+    {
+        $user = Auth::user();        
+
+        if($user->getRoleName() == 'organizer') {
+            $raffles = Raffle::where('user', $user->id )->paginate(10);
+        }else {
+            return redirect()->back()->with('error', 'Esta ruta no esta disponible para ti.');
+        }
+        
         return view('viewtemplate.raffles', compact('raffles'));
 
     }
@@ -61,17 +81,34 @@ class RaffleServices
 
     public function editServices(string $id)
     {
+        $user = Auth::user();
         $raffle = Raffle::with('purchases')->find($id);
-        if ($raffle->purchases->isEmpty()) {
+
+        if($user->getRoleName() == 'admin'){
             return view('viewtemplate.raffleCreate', compact('raffle'));
-        }else{
-            return back()->with('error', 'Esta Rifa no puede ser editada.');
+        }else if($user->getRoleName() == 'organizer'){           
+            if ($raffle->purchases->isEmpty()) {
+                return view('viewtemplate.raffleCreate', compact('raffle'));
+            }else{
+                return back()->with('error', 'Esta Rifa no puede ser editada.');
+            }
+        }else {
+            return back()->with('error', 'Esta pagina no esta disponible para ti.');
         }
     }
 
     public function updateServices(RaffleRequest $request, string $id)
     {
-        $raffle = Raffle::find($id);
+        $user = Auth::user();
+        $raffle = Raffle::with('purchases')->find($id);
+
+        if ($user->hasRole('participant')) {
+            $user->syncRoles(['organizer']);
+        }
+        
+        if($user->getRoleName() == 'organizer' && !$raffle->purchases->isEmpty()){
+            return back()->with('error', 'Esta Rifa no puede ser editada.');
+        }
         if (!$raffle) {
             return view('viewtemplate.notFound')->with('error', 'Rifa no encontrado.');
         }
@@ -101,8 +138,9 @@ class RaffleServices
         {
             return back()->with('error', 'No se puede eliminar la rifa, ya que hay compras realizadas.');
         }
-        $raffle -> status = false;
-        $raffle->save();
+        $raffle->update([
+            'status' => false
+        ]);
         // Mensaje de Discord
         $user = Auth::user();
         $this->discordServices->discordNotification(

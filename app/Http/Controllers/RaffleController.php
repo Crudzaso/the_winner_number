@@ -29,6 +29,11 @@ class RaffleController extends Controller
         return  $this->errorServices->handleError(function(){return $this->raffleServices->indexServices();});
     }
 
+    public function myindex()
+    {
+        return  $this->errorServices->handleError(function(){return $this->raffleServices->myindexServices();});
+    }
+
     /**
      * Show the form for creating a new resource.
      */

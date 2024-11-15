@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use App\Services\DiscordServices;
 
 
 class ErrorServices
@@ -35,6 +36,7 @@ class ErrorServices
             return redirect()->route('components.sing-in');
         } catch (RouteNotFoundException $e) {
             $this->sendNotification("RouteNotFoundException",$e);
+            \Log::error('Error', $e);
             return view('viewtemplate.notFound');
         } catch (MethodNotAllowedHttpException $e) {
             $this->sendNotification("MethodNotAllowedHttpException",$e);

@@ -18,17 +18,17 @@ class RoleSeeder extends Seeder
         $role2 = Role::create(['name'=>'organizer']);
         $role3 = Role::create(['name'=>'admin']);
 
-        Permission::create(['name'=>'participanat.raffles.index'])->syncRoles([$role, $role2, $role3]);
-        Permission::create(['name'=>'participanat.raffles.show'])->syncRoles([$role, $role2, $role3]);
-        Permission::create(['name'=>'participanat.purchases.index'])->syncRoles([$role, $role2]);
-        Permission::create(['name'=>'participanat.purchases.store'])->syncRoles([$role, $role2]);
-        Permission::create(['name'=>'participanat.purchases.show'])->syncRoles([$role, $role2, $role3]);
+        Permission::create(['name'=>'raffles.index'])->syncRoles([$role, $role2, $role3]);
+        Permission::create(['name'=>'raffles.show'])->syncRoles([$role, $role2, $role3]);
+        Permission::create(['name'=>'purchases.index'])->syncRoles([$role, $role2,$role3]);
+        Permission::create(['name'=>'purchases.store'])->syncRoles([$role, $role2]);
+        Permission::create(['name'=>'purchases.show'])->syncRoles([$role, $role2, $role3]);
 
-        Permission::create(['name'=>'organizer.raffles.myindex'])->syncRoles([$role2]);
-        Permission::create(['name'=>'organizer.raffles.store'])->syncRoles([$role2]);
-        Permission::create(['name'=>'organizer.raffles.edit'])->syncRoles([$role2, $role3]);
-        Permission::create(['name'=>'organizer.raffles.destroy'])->syncRoles([$role2, $role3]);
-        Permission::create(['name'=>'organizer.purchases.allmysales'])->syncRoles([$role2]);
+        Permission::create(['name'=>'raffles.myindex'])->syncRoles([$role2]);
+        Permission::create(['name'=>'raffles.store'])->syncRoles([$role2]);
+        Permission::create(['name'=>'raffles.edit'])->syncRoles([$role2, $role3]);
+        Permission::create(['name'=>'raffles.destroy'])->syncRoles([$role2, $role3]);
+        Permission::create(['name'=>'purchases.sales'])->syncRoles([$role2]);
 
         Permission::create(['name'=>'admin.users.index'])->syncRoles([$role3]);
         Permission::create(['name'=>'admin.users.store'])->syncRoles([$role3]);

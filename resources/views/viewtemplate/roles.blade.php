@@ -26,6 +26,11 @@
                         @foreach($role->permissions as $permission)
                             {{ $permission->name }}
                             @if (!$loop->last), @endif
+                            <form action="{{ route('permissions.destroy', $role->id, $permission->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this permission?')">Delete</button>
+                            </form>
                         @endforeach
                     </td>
                     <td>

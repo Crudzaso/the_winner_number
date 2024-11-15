@@ -23,7 +23,14 @@ class PurchaseServices
 
     public function indexServices()
     {
-        $purchases = Purchase::with(['user', 'raffle'])->where('user_id', Auth::id())->paginate(10);
+        $user = Auth::user();
+        $purchases = Purchase::with(['user', 'raffle']);
+
+        if($user->getRoleName() != 'admin') {
+            $purchases->where('user_id', Auth::id());
+        }
+
+        $purchases = $purchases->paginate(10);
         return view('viewtemplate.purchases', compact('purchases'));
     }
 
@@ -74,5 +81,18 @@ class PurchaseServices
             return view('viewtemplate.notFound')->with('error', 'compra no encontrada.');
         }
         return view('viewtemplate.purchaseShow', compact('purchase'));
+    }
+
+    public function salesServices()
+    {
+        $user = Auth::user();
+
+        if($user->getRoleName() != 'organizer') {
+            return redirect()->back()->with('error', 'Esta pagina no esta diponible para ti.');
+        }
+
+        $raffles = Raffle::with('purchases', 'user')->where('user_id', $user->id)->paginate(10);
+
+        return view('viewtemplate.allMySales', compact('raffles'));
     }
 }
