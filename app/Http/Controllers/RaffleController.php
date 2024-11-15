@@ -5,16 +5,33 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Raffle;
 use App\Http\Requests\RaffleRequest;
+use App\Services\RaffleServices;
+use App\Services\ErrorServices;
 
 class RaffleController extends Controller
 {
+    private RaffleServices $raffleServices;
+    private ErrorServices $errorServices;
+
+    public function __construct(
+        RaffleServices $raffleServices,
+        ErrorServices $errorServices
+    )
+    {
+        $this->raffleServices = $raffleServices;
+        $this->errorServices = $errorServices;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $raffles = Raffle::where('status',true)->get();
-        return view('viewtemplate.raffles', compact('raffles'));
+        return  $this->errorServices->handleError(function(){return $this->raffleServices->indexServices();});
+    }
+
+    public function myindex()
+    {
+        return  $this->errorServices->handleError(function(){return $this->raffleServices->myindexServices();});
     }
 
     /**
@@ -22,7 +39,7 @@ class RaffleController extends Controller
      */
     public function create()
     {
-        return view('viewtemplate.raffleCreate');
+        return  $this->errorServices->handleError(function(){return $this->raffleServices->createServices();});
     }
 
     /**
@@ -30,10 +47,7 @@ class RaffleController extends Controller
      */
     public function store(RaffleRequest $request)
     {
-        $raffle = new Raffle($request->all());
-        $raffle->user_id = Auth::id();
-        $raffle->save();
-        return redirect()->route('raffle.index')->with('success', 'Raffle created successfully.');
+        return  $this->errorServices->handleError(function()use($request){return $this->raffleServices->storeServices($request);});        
     }
 
     /**
@@ -41,8 +55,7 @@ class RaffleController extends Controller
      */
     public function show(string $id)
     {
-        $raffle = Raffle::find($id);
-        return view('viewtemplate.raffleShow', compact('raffle'));
+        return  $this->errorServices->handleError(function()use($id){return $this->raffleServices->showServices($id);});
     }
 
     /**
@@ -50,9 +63,7 @@ class RaffleController extends Controller
      */
     public function edit(string $id)
     {
-        $raffle = Raffle::find($id);
-        return view('viewtemplate.raffleCreate', compact('raffle'));
-
+        return  $this->errorServices->handleError(function()use($id){return $this->raffleServices->editServices($id);});
     }
 
     /**
@@ -60,9 +71,7 @@ class RaffleController extends Controller
      */
     public function update(RaffleRequest $request, string $id)
     {
-        $raffle = Raffle::find($id);
-        $raffle->update($request->all());
-        return redirect()->route('raffle.index')->with('success', 'Raffle updated successfully.');
+        return  $this->errorServices->handleError(function()use($request, $id){return $this->raffleServices->updateServices($request, $id);});
     }
 
     /**
@@ -70,9 +79,6 @@ class RaffleController extends Controller
      */
     public function destroy(string $id)
     {
-        $raffle = Raffle::find($id);
-        $raffle -> status = false;
-        $raffle->save();
-        return back()->with('success', 'Raffle deleted successfully.');
+        return  $this->errorServices->handleError(function()use($id){return $this->raffleServices->destroyServices($id);});
     }
 }
