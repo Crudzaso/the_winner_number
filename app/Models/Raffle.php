@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\user;
-use app\Models\purchase;
+use App\Models\User;
+use App\Models\Purchase;
 
 class Raffle extends Model
 {
