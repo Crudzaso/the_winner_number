@@ -40,3 +40,6 @@ Route::get('/raffles/{raffle}', [RaffleController::class, 'show'])->name('raffle
 Route::get('/raffles/{raffle}/edit', [RaffleController::class, 'edit'])->name('raffle.edit');
 Route::put('/raffles/{raffle}', [RaffleController::class, 'update'])->name('raffle.update');
 Route::patch('/raffles/{raffle}', [RaffleController::class, 'destroy'])->name('raffle.destroy');
+
+
+
