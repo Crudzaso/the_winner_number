@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\DiscordServices;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+    feature/implementation_of_the_application_logic
         $this->app->singleton(DiscordServices::class, function ($app) {
             return new DiscordServices(env('DISCORD_WEBHOOK_URL'));
         });
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if($this->app->environment('production')){
+            URL::forceScheme('https');
+        }
     }
 }
