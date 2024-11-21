@@ -13,7 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-    feature/implementation_of_the_application_logic
         $this->app->singleton(DiscordServices::class, function ($app) {
             return new DiscordServices(env('DISCORD_WEBHOOK_URL'));
         });
