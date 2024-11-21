@@ -23,24 +23,30 @@
         </div>  
     @endif
 
+    <a href="{{ route('user.index', 'activos') }}">Usuarios activos</a>
+    <a href="{{ route('user.index', 'inactivos') }}">Usuarios inactivos</a>
+    <a href="{{ route('user.create') }}">Crear un nuevo Usuarios</a>
+
 
     <div>
-        <a href="{{ route('raffle.create') }}">crear rifa</a>
-        @forelse($raffles as $raffle)
+        @forelse($users as $user)
             <div>
-                <h1>{{ $raffle->name }}</h1>
-                <p>{{ $raffle->price }}</p>
-                <p>{{ $raffle->start_date }}</p>
-                <p>{{ $raffle->closing_date }}</p>
-                <p>{{ $raffle->award }}</p>
-                <a href="{{ route('raffle.show', $raffle->id) }}">ver detalles</a>
-                <a href="{{ route('raffle.edit', $raffle->id) }}">editar</a>
-                <form action="{{ route('raffle.destroy', $raffle->id) }}" method="POST">
+                <h1>Nombre: {{ $user->name }}</h1>
+                <p>Correo: {{ $user->email }}</p>
+                <p>Total invertido: {{ $user->total_spent }}</p>
+                <p>Rifas creadas: {{ $user->raffles_created_count }}</p>
+                <p>Rol: {{ $user->getRoleNames()->implode(', ') }}</p>
+                <a href="{{ route('user.show', $user->id) }}">ver detalles</a>
+                <a href="{{ route('user.edit', $user->id) }}">editar</a>
+                <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
-                    <button type="submit">eliminar</button>
+                    @if ($user->status == true)
+                        <button type="submit">eliminar</button>   
+                    @else
+                        <button type="submit">Restablecer</button>
+                    @endif
                 </form>
-                <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a>
             </div>
         @empty
             <h2>No hay datos que mostrar</h2>

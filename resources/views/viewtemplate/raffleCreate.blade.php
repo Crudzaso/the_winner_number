@@ -25,27 +25,27 @@
         <label for="name">nombre</label>
         <input type="text" name="name" value="{{ isset($raffle) ? $raffle->name : null }}">
         @error('name')
-            <p class='error'>Error en el campo de nombre</p>
+            <p class="error">{{ $message }}</p>
         @enderror
         <label for="price">precio</label>
         <input type="text" name="price" value="{{ isset($raffle) ? $raffle->price : null}}">
         @error('price')
-            <p class='error'>Error en el campo de precio</p>
+            <p class="error">{{ $message }}</p>
         @enderror
         <label for="start_date">Fecha de inicio</label>
         <input type="date" name="start_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->start_date)->format('Y-m-d') : '' }}">
         @error('start_date')
-            <p class='error'>Error en el campo de Fecha</p>
+            <p class="error">{{ $message }}</p>
         @enderror
         <label for="closing_date">fecha de fin</label>
         <input type="date" name="closing_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->closing_date)->format('Y-m-d') : '' }}">
         @error('closing_date')
-            <p class='error'>Error en el campo de fecha de cierre esta debe ser posterior a la fecha de inicio</p>
+            <p class="error">{{ $message }}</p>
         @enderror
         <label for="award">premio</label>
         <input type="text" name="award" value="{{ isset($raffle) ? $raffle->award : null}}">
         @error('award')
-            <p class='error'>Error en el campo de premio</p>
+            <p class="error">{{ $message }}</p>
         @enderror
         <button type="submit">{{ isset($raffle) ? 'Actualizar' : 'Crear' }}</button>
     </form>

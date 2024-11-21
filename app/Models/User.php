@@ -4,14 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use app\Models\raffle;
-use app\Models\purchase;
+use App\Models\Raffle;
+use App\Models\Purchase;
 
 class User extends Authenticatable
 {
@@ -34,6 +35,13 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'phone_number',
+        'date_of_birth',
+        'identification_number',
+        'agreement_terms',
+        'accepted_privacy_policy',
+        'nequi_account',
+        'status'
     ];
 
     /**
@@ -67,6 +75,10 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'date_of_birth' => 'date',
+            'agreement_terms' => 'boolean',
+            'accepted_privacy_policy' => 'boolean',
+            'status' => 'boolean',
         ];
     }
 

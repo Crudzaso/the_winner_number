@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\user;
-use app\Models\raffle;
+use App\Models\User;
+use App\Models\Raffle;
 
-class Purchases extends Model
+class Purchase extends Model
 {
     protected $guarded=[];
+
+    protected $cast=[
+        'number' => 'integer'
+    ];
 
     public function user():BelongsTo
     {
