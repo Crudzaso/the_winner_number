@@ -8,6 +8,8 @@ use App\Models\Purchase;
 use App\Models\Raffle;
 use App\Http\Requests\PurchaseRequest;
 use App\Services\DiscordServices;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class PurchaseServices
 {

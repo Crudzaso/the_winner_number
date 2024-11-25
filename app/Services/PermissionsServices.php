@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class PermissionsServices
 {
     /**
@@ -50,9 +53,9 @@ class PermissionsServices
         return redirect()->route('permissions.index')->with('success', 'Permission updated successfully.');
     }
 
-    public function destroyServices(role $role, Permission $permission)
+    /*public function destroyServices(Role $role, Permission $permission)
     {
         $role->revokePermissionTo($permission);
         return redirect()->back()->with('success', 'Permission deleted successfully.');
-    }
+    }*/
 }

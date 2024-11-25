@@ -7,7 +7,9 @@ use App\Http\Controllers\RaffleController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\PermissionController;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,7 +39,7 @@ Route::get('/auth/google/callback', [AuthenticatedSessionController::class, 'han
 Route::view('/view','viewtemplate.viewlogin');
 Route::view('/viewlayout','viewtemplate.viewlayout');
 
-Route::middleware('auth', 'role:participant|organizer|admin')->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/raffles', [RaffleController::class, 'index'])->name('raffle.index')->middleware('permission:raffles.index');
     Route::get('/raffles/myraffles', [RaffleController::class, 'myindex'])->name('raffle.myindex')->middleware('permission:raffles.myindex');
@@ -76,7 +78,7 @@ Route::middleware('auth', 'role:participant|organizer|admin')->group(function ()
         Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
         Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-        Route::get('/permissions/create', [PermissionController::class, 'create'])->name('prmissions.create');
+        Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
         Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
         Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
         Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');

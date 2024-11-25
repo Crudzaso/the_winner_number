@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\DiscordServices;
 use Illuminate\Support\Facades\URL;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**

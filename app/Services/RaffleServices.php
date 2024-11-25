@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Raffle;
 use App\Http\Requests\RaffleRequest;
 use App\Services\DiscordServices;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RaffleServices
 {
