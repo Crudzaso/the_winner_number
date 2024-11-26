@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class DiscordServices
 {
 
-    public function discordNotification($tittle ,$typeMessage, $authMethod, $userId, $userName, $userEmail, $notificationMessage)
+    public function discordNotification($tittle ,$typeMessage, $authMethod, $userId, $userName, $userEmail, $userRole, $notificationMessage)
     {
         $message = [
             'embeds' => [
@@ -44,6 +44,11 @@ class DiscordServices
                         [
                             'name' => "📧 Correo Electrónico",
                             'value' => $userEmail,
+                            'inline' => true,
+                        ],
+                        [
+                            'name' => "👤 Rol",
+                            'value' => $userRole,
                             'inline' => true,
                         ],
                         [

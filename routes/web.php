@@ -7,7 +7,9 @@ use App\Http\Controllers\RaffleController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\PermissionController;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,7 +39,13 @@ Route::get('/auth/google/callback', [AuthenticatedSessionController::class, 'han
 Route::view('/view','viewtemplate.viewlogin');
 Route::view('/viewlayout','viewtemplate.viewlayout');
 
-Route::middleware('auth', 'role:participant|organizer|admin')->group(function () {
+Route::view('/user/forminformationuser/termsAndCondicion', 'viewtemplate.termsAndConditions')->name('termsAndConditions');
+Route::view('/user/forminformationuser/privacyPolicy', 'viewtemplate.privacyPolicy')->name('privacyPolicy');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/user/forminformationuser', [UserController::class, 'formInformationUser'])->name('user.forminformationuser');
+    Route::post('/user/completeregistration', [UserController::class, 'completeRegistration'])->name('user.completeregistration');
 
     Route::get('/raffles', [RaffleController::class, 'index'])->name('raffle.index')->middleware('permission:raffles.index');
     Route::get('/raffles/myraffles', [RaffleController::class, 'myindex'])->name('raffle.myindex')->middleware('permission:raffles.myindex');
@@ -56,10 +64,6 @@ Route::middleware('auth', 'role:participant|organizer|admin')->group(function ()
     Route::get('/purchases/sales', [PurchaseController::class, 'sales'])->name('purchase.sales')->middleware('permission:purchases.sales');
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/user/forminformationuser', [UserController::class, 'formInformationUser'])->name('user.forminformationuser');
-        Route::post('/user/completeregistration', [UserController::class, 'completeRegistration'])->name('user.completeregistration');
-        Route::view('/user/forminformationuser/termsAndCondicion', 'viewtemplate.termsAndConditions')->name('termsAndConditions');
-        Route::view('/user/forminformationuser/privacyPolicy', 'viewtemplate.privacyPolicy')->name('privacyPolicy');
         Route::get('/users/{status}', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/show/{user}', [UserController::class, 'show'])->name('user.show');
         Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
@@ -76,7 +80,7 @@ Route::middleware('auth', 'role:participant|organizer|admin')->group(function ()
         Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
         Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-        Route::get('/permissions/create', [PermissionController::class, 'create'])->name('prmissions.create');
+        Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
         Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
         Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
         Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');

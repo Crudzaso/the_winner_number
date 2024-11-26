@@ -25,7 +25,9 @@
 
 
     <div>
-        <a href="{{ route('raffle.create') }}">crear rifa</a>
+        @can('raffles.store')
+            <a href="{{ route('raffle.create') }}">crear rifa</a>
+        @endcan
         @forelse($raffles as $raffle)
             <div>
                 <h1>{{ $raffle->name }}</h1>
@@ -34,13 +36,21 @@
                 <p>{{ $raffle->closing_date }}</p>
                 <p>{{ $raffle->award }}</p>
                 <a href="{{ route('raffle.show', $raffle->id) }}">ver detalles</a>
-                <a href="{{ route('raffle.edit', $raffle->id) }}">editar</a>
-                <form action="{{ route('raffle.destroy', $raffle->id) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit">eliminar</button>
-                </form>
-                <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a>
+
+                @can('raffles.edit')
+                    <a href="{{ route('raffle.edit', $raffle->id) }}">editar</a>
+                @endcan
+                @can('raffles.destroy')
+                    <form action="{{ route('raffle.destroy', $raffle->id) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit">eliminar</button>
+                    </form>
+                @endcan
+                @can('purchase.store')
+                    <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a>
+                @endcan
+
             </div>
         @empty
             <h2>No hay datos que mostrar</h2>
