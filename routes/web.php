@@ -39,7 +39,13 @@ Route::get('/auth/google/callback', [AuthenticatedSessionController::class, 'han
 Route::view('/view','viewtemplate.viewlogin');
 Route::view('/viewlayout','viewtemplate.viewlayout');
 
+Route::view('/user/forminformationuser/termsAndCondicion', 'viewtemplate.termsAndConditions')->name('termsAndConditions');
+Route::view('/user/forminformationuser/privacyPolicy', 'viewtemplate.privacyPolicy')->name('privacyPolicy');
+
 Route::middleware('auth')->group(function () {
+
+    Route::get('/user/forminformationuser', [UserController::class, 'formInformationUser'])->name('user.forminformationuser');
+    Route::post('/user/completeregistration', [UserController::class, 'completeRegistration'])->name('user.completeregistration');
 
     Route::get('/raffles', [RaffleController::class, 'index'])->name('raffle.index')->middleware('permission:raffles.index');
     Route::get('/raffles/myraffles', [RaffleController::class, 'myindex'])->name('raffle.myindex')->middleware('permission:raffles.myindex');
@@ -58,10 +64,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchases/sales', [PurchaseController::class, 'sales'])->name('purchase.sales')->middleware('permission:purchases.sales');
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/user/forminformationuser', [UserController::class, 'formInformationUser'])->name('user.forminformationuser');
-        Route::post('/user/completeregistration', [UserController::class, 'completeRegistration'])->name('user.completeregistration');
-        Route::view('/user/forminformationuser/termsAndCondicion', 'viewtemplate.termsAndConditions')->name('termsAndConditions');
-        Route::view('/user/forminformationuser/privacyPolicy', 'viewtemplate.privacyPolicy')->name('privacyPolicy');
         Route::get('/users/{status}', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/show/{user}', [UserController::class, 'show'])->name('user.show');
         Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');

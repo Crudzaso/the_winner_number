@@ -24,11 +24,13 @@ class RaffleServices
     public function indexServices()
     {
         $user = Auth::user();        
-        $raffles = Raffle::with('user')->paginate(10);
+        $raffles = Raffle::with('user');
 
-        if($user->getRoleName() != 'admin') {
-            $raffles->where('status',true)->paginate(10);
+        if($user->getRoleNames()->first() != 'admin') {
+            $raffles->where('status',true);
         }
+
+        $raffles = $raffles->paginate(10);
         
         return view('viewtemplate.raffles', compact('raffles'));
 
@@ -38,7 +40,7 @@ class RaffleServices
     {
         $user = Auth::user();        
 
-        if($user->getRoleName() == 'organizer') {
+        if($user->getRoleNames()->first() == 'organizer') {
             $raffles = Raffle::where('user', $user->id )->paginate(10);
         }else {
             return redirect()->back()->with('error', 'Esta ruta no esta disponible para ti.');
@@ -70,6 +72,7 @@ class RaffleServices
             $user->id,
             $user->name,
             $user->email,
+            $user->getRoleNames()->first(),
             "🎉 El usuario ha Creado la rifa \n ID: ".$raffle->id."\n Name: ".$raffle->name."\n costo: ".$raffle->price."\n premio: ".$raffle->award
         );
         return redirect()->route('raffle.index')->with('success', 'Raffle created successfully.');
@@ -86,9 +89,9 @@ class RaffleServices
         $user = Auth::user();
         $raffle = Raffle::with('purchases')->find($id);
 
-        if($user->getRoleName() == 'admin'){
+        if($user->getRoleNames()->first() == 'admin'){
             return view('viewtemplate.raffleCreate', compact('raffle'));
-        }else if($user->getRoleName() == 'organizer'){           
+        }else if($user->getRoleNames()->first() == 'organizer'){           
             if ($raffle->purchases->isEmpty()) {
                 return view('viewtemplate.raffleCreate', compact('raffle'));
             }else{
@@ -108,7 +111,7 @@ class RaffleServices
             $user->syncRoles(['organizer']);
         }
         
-        if($user->getRoleName() == 'organizer' && !$raffle->purchases->isEmpty()){
+        if($user->getRoleNames()->first() == 'organizer' && !$raffle->purchases->isEmpty()){
             return back()->with('error', 'Esta Rifa no puede ser editada.');
         }
         if (!$raffle) {
@@ -125,6 +128,7 @@ class RaffleServices
             $user->id,
             $user->name,
             $user->email,
+            $user->getRoleNames()->first(),
             "🎉 El usuario ha Actualizado la rifa \n ID: ".$raffle->id."\n Name: ".$raffle->name."\n costo: ".$raffle->price."\n premio: ".$raffle->award
         );
         return redirect()->route('raffle.index')->with('success', 'Raffle updated successfully.');
@@ -153,6 +157,7 @@ class RaffleServices
             $user->id,
             $user->name,
             $user->email,
+            $user->getRoleNames()->first(),
             "🎉 El usuario ha Eliminado la rifa \n ID: ".$raffle->id."\n Name: ".$raffle->name."\n costo: ".$raffle->price."\n premio: ".$raffle->award
         );
         return back()->with('success', 'Raffle deleted successfully.');

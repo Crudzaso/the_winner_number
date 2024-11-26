@@ -28,7 +28,7 @@ class PurchaseServices
         $user = Auth::user();
         $purchases = Purchase::with(['user', 'raffle']);
 
-        if($user->getRoleName() != 'admin') {
+        if($user->getRoleNames()->first() != 'admin') {
             $purchases->where('user_id', Auth::id());
         }
 
@@ -39,10 +39,13 @@ class PurchaseServices
     public function createServices(string $id)
     {
         $raffle = Raffle::find($id);
+
         if (!$raffle) {
             return view('viewtemplate.notFound')->with('error', 'Rifa no encontrado.');
         }
-        $purchases = Purchase::where('raffle_id', $raffle->id)->pluck('number')->toArray();                
+
+        $purchases = Purchase::where('raffle_id', $raffle->id)->pluck('number')->toArray();  
+
         return view('viewtemplate.purchaseCreate', compact('raffle', 'purchases'));
     }
 
@@ -62,6 +65,7 @@ class PurchaseServices
         ]);
 
         $user->increment('total_spent', $raffle->price);
+        
         // Mensaje de Discord
         $this->discordServices->discordNotification(
             // Información para el mensaje de notificación
@@ -71,6 +75,7 @@ class PurchaseServices
             $user->id,
             $user->name,
             $user->email,
+            $user->getRoleNames()->first(),
             "🎉 El usuario ha Creado una compra \n ID: ".$purchase->id."\n Rifa: ".$raffle->name."\n Usuario: ".$user->name."\n Number: ".$request->number
         );
         return redirect()->route('raffle.index')->with('success', 'Compra Realizada');
@@ -89,7 +94,8 @@ class PurchaseServices
     {
         $user = Auth::user();
 
-        if($user->getRoleName() != 'organizer') {
+
+        if($user->getRoleNames()->first() != 'organizer') {
             return redirect()->back()->with('error', 'Esta pagina no esta diponible para ti.');
         }
 

@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-        public function handleGoogleCallback()
+    public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
@@ -76,6 +76,7 @@ class AuthenticatedSessionController extends Controller
                 $user->id,
                 $user->name,
                 $user->email,
+                $user->getRoleNames(),
                 "🎉 El usuario ha iniciado sesión correctamente."
             );
 

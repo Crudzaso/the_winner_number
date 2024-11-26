@@ -15,6 +15,8 @@ use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Services\DiscordServices;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 
@@ -38,9 +40,9 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        
+        $this->discordServices = app(DiscordServices::class);
 
-                // En FortifyServiceProvider.php
+        // En FortifyServiceProvider.php
         Fortify::authenticateUsing(function (Request $request) {
 
             $user = User::where('email', $request->email)->first();
@@ -51,9 +53,13 @@ class FortifyServiceProvider extends ServiceProvider
                     abort(403, 'El usuario ha sido desactivado. Por favor contacte al administrador.');
                 }
 
+                if ($user->getRoleNames()->isEmpty()) {
+                    $user->assignRole('participant');
+                }
+
                 Auth::login($user);
 
-                // Información para la notificación
+                /*// Información para la notificación
                 $companyName = "The winner number";
                 $logoUrl = 'https://private-user-images.githubusercontent.com/116232866/382150624-2fb0a0cf-722c-4f79-8310-36d7b295ac61.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzA3NTcyNDQsIm5iZiI6MTczMDc1Njk0NCwicGF0aCI6Ii8xMTYyMzI4NjYvMzgyMTUwNjI0LTJmYjBhMGNmLTcyMmMtNGY3OS04MzEwLTM2ZDdiMjk1YWM2MS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTEwNFQyMTQ5MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MjRhN2E1OGMxYTBiOWJmZGIzM2U0YjY4NmZhYzcwNjQyNzM1ZmU4ZTQzN2VjZDIzNDdiNGM1MjA5ZTA3MTVkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.G_OFBF5TidqPnesPMYmZTjXbp7behpFnhABy9EHXUgo';
                 $authMethod = "Usuario"; // O "Google" si es el caso
@@ -72,9 +78,7 @@ class FortifyServiceProvider extends ServiceProvider
                     $userEmail,
                     $date,
                     $notificationMessage
-                );
-
-                Auth::login($user);
+                );*/
 
                 // Mensaje de Discord
                 $this->discordServices->discordNotification(
@@ -85,6 +89,7 @@ class FortifyServiceProvider extends ServiceProvider
                     $user->id,
                     $user->name,
                     $user->email,
+                    $user->getRoleNames(),
                     "🎉 El usuario ha iniciado sesión correctamente."
                 );
 
