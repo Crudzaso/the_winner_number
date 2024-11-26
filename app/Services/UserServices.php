@@ -10,7 +10,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserCreateRequest;
 use App\Services\DiscordServices;
 use Spatie\Permission\Models\Role;
-
+use Spatie\Permission\Models\Permission;
 
 class UserServices
 {
@@ -25,19 +25,19 @@ class UserServices
     }
 
     public function indexServices(string $status)
-{
-    $query = User::with('roles');
+    {
+        $query = User::with('roles');
 
-    if ($status === 'activos') {
-        $query->where('status', true);
-    } elseif ($status === 'inactivos') {
-        $query->where('status', false);
+        if ($status === 'activos') {
+            $query->where('status', true);
+        } elseif ($status === 'inactivos') {
+            $query->where('status', false);
+        }
+
+        $users = $query->paginate(10);
+
+        return view('viewtemplate.users', compact('users'));
     }
-
-    $users = $query->paginate(10);
-
-    return view('viewtemplate.users', compact('users'));
-}
 
 
     public function createServices()

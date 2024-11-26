@@ -11,6 +11,8 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Services\DiscordServices;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 
@@ -41,7 +43,7 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-        public function handleGoogleCallback()
+    public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
@@ -74,6 +76,7 @@ class AuthenticatedSessionController extends Controller
                 $user->id,
                 $user->name,
                 $user->email,
+                $user->getRoleNames(),
                 "🎉 El usuario ha iniciado sesión correctamente."
             );
 

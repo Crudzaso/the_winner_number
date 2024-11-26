@@ -41,7 +41,7 @@ class User extends Authenticatable
         'agreement_terms',
         'accepted_privacy_policy',
         'nequi_account',
-        'status'
+        'status',
     ];
 
     /**
