@@ -17,43 +17,43 @@
 
     @if (Session::get('error'))
         <div>
-            <p id='message'>
+            <h4 id='message'>
                 {{ Session::get('error') }}
-            </p>
+            </h4>
         </div>  
     @endif
 
 
     <div>
         @can('raffles.store')
-            <a href="{{ route('raffle.create') }}">crear rifa</a>
+            <a href="{{ route('raffle.create') }}"><strong> crear rifa </strong></a>
         @endcan
         @forelse($raffles as $raffle)
             <div>
                 <h1>{{ $raffle->name }}</h1>
-                <p>{{ $raffle->price }}</p>
-                <p>{{ $raffle->start_date }}</p>
-                <p>{{ $raffle->closing_date }}</p>
-                <p>{{ $raffle->award }}</p>
-                <a href="{{ route('raffle.show', $raffle->id) }}">ver detalles</a>
+                <h4>Precio: </h4><p>{{ $raffle->price }}</p>
+                <h4>Fecha de inicio: </h4><p>{{ $raffle->start_date }}</p>
+                <h4>Fecha de cierre: </h4><p>{{ $raffle->closing_date }}</p>
+                <h4>Premio: </h4><p>{{ $raffle->award }}</p>
+                <a href="{{ route('raffle.show', $raffle->id) }}">ver detalles</a><br>
 
                 @can('raffles.edit')
-                    <a href="{{ route('raffle.edit', $raffle->id) }}">editar</a>
+                    <a href="{{ route('raffle.edit', $raffle->id) }}">editar</a><br>
                 @endcan
                 @can('raffles.destroy')
                     <form action="{{ route('raffle.destroy', $raffle->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit">eliminar</button>
+                        <button type="submit">eliminar</button><br>
                     </form>
                 @endcan
-                @can('purchase.store')
-                    <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a>
+                @can('purchases.store')
+                    <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a><br>
                 @endcan
 
             </div>
         @empty
-            <h2>No hay datos que mostrar</h2>
+            <h4>No hay datos que mostrar</h4>
         @endforelse
     </div>
 

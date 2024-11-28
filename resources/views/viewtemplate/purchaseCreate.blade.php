@@ -8,15 +8,15 @@
 </head>
 <body>
     <a href="{{ route('raffle.index') }}">volver a home</a>
-    <h2>{{ $raffle->name }}</h2>
-    <p>{{ $raffle->priace }}</p>
-    <p>{{ $raffle->start_date }}</p>
-    <p>{{ $raffle->award }}</p>
+    <h1>{{ $raffle->name }}</h1>
+    <h4>Precio: </h4><p>{{ $raffle->price }}</p>
+    <h4>Fecha de cierre: </h4><p>{{ $raffle->closing_date }}</p>
+    <h4>Premio: </h4><p>{{ $raffle->award }}</p>
 
     <form action="{{ route('purchase.store') }}" method="POST">
         @csrf
         <input type="hidden" name="raffle_id" value="{{ $raffle->id }}">
-        <label for="numero">Selecciona un número:</label>
+        <label for="numero"><strong>Selecciona un número: </strong></label>
 
         <select name="number" id="numero">
             @for ($i = 0; $i <= 99; $i++) 
@@ -24,7 +24,7 @@
                     <option value="{{ $i }}">{{ $i }}</option>
                 @endif
             @endfor
-        </select>
+        </select><br>
 
         @error('number')
             <p class='error'>escoge un numero de la lista</p>

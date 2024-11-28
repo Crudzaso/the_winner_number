@@ -30,10 +30,11 @@ class PurchaseServices
 
         if($user->getRoleNames()->first() != 'admin') {
             $purchases->where('user_id', Auth::id());
+            $user = Auth::user();
         }
 
         $purchases = $purchases->paginate(10);
-        return view('viewtemplate.purchases', compact('purchases'));
+        return view('viewtemplate.purchases', compact('purchases', 'user'));
     }
 
     public function createServices(string $id)
@@ -94,8 +95,7 @@ class PurchaseServices
     {
         $user = Auth::user();
 
-
-        if($user->getRoleNames()->first() != 'organizer') {
+        if(!$user->hasRole('organizer')) {
             return redirect()->back()->with('error', 'Esta pagina no esta diponible para ti.');
         }
 
