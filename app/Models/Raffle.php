@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Purchase;
 
-class Raffle extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+
+class Raffle extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $guarded=[];
 
     protected $cast=[

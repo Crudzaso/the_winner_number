@@ -62,7 +62,6 @@ class PurchaseController extends Controller
 
     public function sales()
     {
-        dd('hola mundo');
         return $this->errorServices->handleError(function(){return $this->purchaseServices->salesServices();});
     }
 }

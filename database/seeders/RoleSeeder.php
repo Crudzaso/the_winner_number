@@ -1,13 +1,13 @@
 <?php
 
 namespace Database\Seeders;
-use Spatie\Permission\Models\participantRole;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class participantRoleSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,20 +15,20 @@ class participantRoleSeeder extends Seeder
     public function run(): void
     {
         $participantRole = participantRole::create(['name'=>'participant']);
-        $organizerparticipantRole = participantRole::create(['name'=>'organizer']);
+        $organizerRole = participantRole::create(['name'=>'organizer']);
         $adminRole = participantRole::create(['name'=>'admin']);
 
-        Permission::create(['name'=>'raffles.index'])->syncparticipantRoles([$participantRole, $organizerparticipantRole, $adminRole]);
-        Permission::create(['name'=>'raffles.show'])->syncparticipantRoles([$participantRole, $organizerparticipantRole, $adminRole]);
-        Permission::create(['name'=>'purchases.index'])->syncparticipantRoles([$participantRole, $organizerparticipantRole,$adminRole]);
-        Permission::create(['name'=>'purchases.store'])->syncparticipantRoles([$participantRole, $organizerparticipantRole]);
-        Permission::create(['name'=>'purchases.show'])->syncparticipantRoles([$participantRole, $organizerparticipantRole, $adminRole]);
+        Permission::create(['name'=>'raffles.index'])->syncparticipantRoles([$participantRole, $organizerRole, $adminRole]);
+        Permission::create(['name'=>'raffles.show'])->syncparticipantRoles([$participantRole, $organizerRole, $adminRole]);
+        Permission::create(['name'=>'purchases.index'])->syncparticipantRoles([$participantRole, $organizerRole,$adminRole]);
+        Permission::create(['name'=>'purchases.store'])->syncparticipantRoles([$participantRole, $organizerRole]);
+        Permission::create(['name'=>'purchases.show'])->syncparticipantRoles([$participantRole, $organizerRole, $adminRole]);
 
-        Permission::create(['name'=>'raffles.myindex'])->syncparticipantRoles([$organizerparticipantRole]);
-        Permission::create(['name'=>'raffles.store'])->syncparticipantRoles([$organizerparticipantRole]);
-        Permission::create(['name'=>'raffles.edit'])->syncparticipantRoles([$organizerparticipantRole, $adminRole]);
-        Permission::create(['name'=>'raffles.destroy'])->syncparticipantRoles([$organizerparticipantRole, $adminRole]);
-        Permission::create(['name'=>'purchases.sales'])->syncparticipantRoles([$organizerparticipantRole]);
+        Permission::create(['name'=>'raffles.myindex'])->syncparticipantRoles([$organizerRole]);
+        Permission::create(['name'=>'raffles.store'])->syncparticipantRoles([$organizerRole]);
+        Permission::create(['name'=>'raffles.edit'])->syncparticipantRoles([$organizerRole, $adminRole]);
+        Permission::create(['name'=>'raffles.destroy'])->syncparticipantRoles([$organizerRole, $adminRole]);
+        Permission::create(['name'=>'purchases.sales'])->syncparticipantRoles([$organizerRole]);
 
         Permission::create(['name'=>'admin.users.index'])->syncparticipantRoles([$adminRole]);
         Permission::create(['name'=>'admin.users.store'])->syncparticipantRoles([$adminRole]);

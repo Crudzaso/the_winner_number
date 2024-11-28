@@ -14,16 +14,36 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Raffle;
 use App\Models\Purchase;
 
-class User extends Authenticatable
+use OwenIt\Auditing\Contracts\Auditable;
+
+class User extends Authenticatable implements Auditable
 {
     use HasApiTokens;
     use HasRoles;
+    use \OwenIt\Auditing\Auditable;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    protected $auditInclude = [
+        'name',
+        'email',
+        'phone_number',
+        'date_of_birth',
+        'identification_number',
+        'nequi_account',
+        'status',
+    ];
+
+    protected $auditExclude = [
+        'password',
+        'google_id',
+        'agreement_terms',
+        'accepted_privacy_policy',
+    ];
 
     /**
      * The attributes that are mass assignable.
