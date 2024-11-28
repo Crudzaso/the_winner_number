@@ -7,8 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Raffle;
 
-class Purchase extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+
+class Purchase extends Model implements Auditable
 {
+
+    use \OwenIt\Auditing\Auditable;
+
+    protected $auditInclude = [
+        'id',
+        'user_id',
+        'raffle_id',
+        'number',
+    ];
+
+    protected $auditExclude = [];
+
     protected $guarded=[];
 
     protected $cast=[

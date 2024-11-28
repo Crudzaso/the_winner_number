@@ -9,13 +9,15 @@
 <body>
     <div>
         <a href="{{ route('raffle.index') }}">home</a>
+        <h2>monto invertido en rifas: {{ $user->total_spent}}</h2>
+        <h1>Compras</h1>
         @forelse($purchases as $purchase)
             <div>
-                <p>{{ $purchase->raffle->name }}</p>
-                <p>{{ $purchase->raffle->price }}</p>
-                <p>{{ $purchase->raffle->closing_date }}</p>
-                <p>{{ $purchase->raffle->award }}</p>
-                <p>{{ $purchase->number }}</p>
+                <h1>{{ $purchase->raffle->name }}</h1>
+                <h4>Precio: </h4><p>{{ $purchase->raffle->price }}</p>
+                <h4>Fecha de cierre: </h4><p>{{ $purchase->raffle->closing_date }}</p>
+                <h4>Premio: </h4><p>{{ $purchase->raffle->award }}</p>
+                <h4>Numero comprado: </h4><p>{{ $purchase->number }}</p>
                 <a href="{{ route('purchase.show', $purchase->id ) }}">ver detalles</a>
             </div>
         @empty
