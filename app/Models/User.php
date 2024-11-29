@@ -9,10 +9,18 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+<<<<<<< HEAD
+=======
+use Spatie\Permission\Traits\HasRoles;
+>>>>>>> 9d9912a84ac53fd2560f0051017d15a63fa7adde
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+<<<<<<< HEAD
+=======
+    use HasRoles;
+>>>>>>> 9d9912a84ac53fd2560f0051017d15a63fa7adde
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\DiscordServices;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Services\ErrorServices;
@@ -50,25 +49,11 @@ class RoleServices
             'permissions' => 'array',
         ]);
 
-        // Crear rol
         $role = Role::create(['name' => $request->name]);
 
-        // Asignar permisos al rol
         if ($request->has('permissions')) {
             $role->syncPermissions($request->permissions);
         }
-
-        $admin = Auth::user();
-        $this->discordServices->discordNotification(
-            // Información para el mensaje de notificación
-            "Notificación de Role",
-            "Creaciación de Role",
-            "Controller Store",
-            $admin->id,
-            $admin->name,
-            $admin->email,
-            "🎉 El usuario ha Creado un nuevo Role \n ID: ".$role->id."\n Name: ".$role->name."\n Permisos: ".$role->permissions
-        );
 
         return redirect()->route('roles.index')->with('success', 'Rol creado con éxito.');
     
@@ -100,7 +85,6 @@ class RoleServices
         $role = Role::findOrFail($id);
         $role->update(['name' => $request->name]);
 
-        // Actualizar permisos
         if ($request->has('permissions')) {
             $role->syncPermissions($request->permissions);
         }
