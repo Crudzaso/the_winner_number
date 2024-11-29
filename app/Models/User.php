@@ -4,46 +4,21 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use App\Models\Raffle;
-use App\Models\Purchase;
 
-use OwenIt\Auditing\Contracts\Auditable;
-
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable
 {
     use HasApiTokens;
-    use HasRoles;
-    use \OwenIt\Auditing\Auditable;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
-    protected $auditInclude = [
-        'name',
-        'email',
-        'phone_number',
-        'date_of_birth',
-        'identification_number',
-        'nequi_account',
-        'status',
-    ];
-
-    protected $auditExclude = [
-        'password',
-        'google_id',
-        'agreement_terms',
-        'accepted_privacy_policy',
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -54,14 +29,6 @@ class User extends Authenticatable implements Auditable
         'name',
         'email',
         'password',
-        'google_id',
-        'phone_number',
-        'date_of_birth',
-        'identification_number',
-        'agreement_terms',
-        'accepted_privacy_policy',
-        'nequi_account',
-        'status',
     ];
 
     /**
@@ -95,21 +62,6 @@ class User extends Authenticatable implements Auditable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'date_of_birth' => 'date',
-            'agreement_terms' => 'boolean',
-            'accepted_privacy_policy' => 'boolean',
-            'status' => 'boolean',
         ];
-    }
-
-
-    public function raffles():HasMany
-    {
-        return $this->hasMany(Raffle::class);
-    }
-
-    public function purchases():HasMany
-    {
-        return $this->hasMany(Purchase::class);
     }
 }
