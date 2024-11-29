@@ -7,21 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\Raffle;
 use App\Http\Requests\PurchaseRequest;
-use App\Services\DiscordServices;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class PurchaseServices
 {
     
-    private DiscordServices $discordServices;
-
-    public function __construct(
-        DiscordServices $discordServices
-    )
-    {
-        $this->discordServices = $discordServices;
-    }
+    public function __construct(){}
 
     public function indexServices()
     {
@@ -66,25 +58,13 @@ class PurchaseServices
         ]);
 
         $user->increment('total_spent', $raffle->price);
-        
-        // Mensaje de Discord
-        $this->discordServices->discordNotification(
-            // Información para el mensaje de notificación
-            "Notificación de Purchase",
-            "Creaciación de Compra",
-            "Controller Store",
-            $user->id,
-            $user->name,
-            $user->email,
-            $user->getRoleNames()->first(),
-            "🎉 El usuario ha Creado una compra \n ID: ".$purchase->id."\n Rifa: ".$raffle->name."\n Usuario: ".$user->name."\n Number: ".$request->number
-        );
+
         return redirect()->route('raffle.index')->with('success', 'Compra Realizada');
     }
 
     public function showServices(string $id)
     {
-        $purchase = Purchase::with(['user', 'raffle'])->find($id);
+        $purchase = Purchase::with('user', 'raffle')->find($id);
         if (!$purchase) {
             return view('viewtemplate.notFound')->with('error', 'compra no encontrada.');
         }

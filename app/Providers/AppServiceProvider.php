@@ -31,10 +31,11 @@ class AppServiceProvider extends ServiceProvider
         if($this->app->environment('production')){
             URL::forceScheme('https');
         }
-
-        Event::listen(
-            Audited::class,
-            SendAuditToDiscordListener::class,
-        );
     }
+
+    protected $listen = [
+        Audited::class => [
+            SendAuditToDiscordListener::class,
+        ],
+    ];
 }

@@ -32,11 +32,6 @@
         @error('price')
             <p class="error">{{ $message }}</p>
         @enderror
-        <label for="start_date">Fecha de inicio</label>
-        <input type="date" name="start_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->start_date)->format('Y-m-d') : '' }}">
-        @error('start_date')
-            <p class="error">{{ $message }}</p>
-        @enderror
         <label for="closing_date">fecha de fin</label>
         <input type="date" name="closing_date" value="{{ isset($raffle) ? \Carbon\Carbon::parse($raffle->closing_date)->format('Y-m-d') : '' }}">
         @error('closing_date')

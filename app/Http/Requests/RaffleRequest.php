@@ -25,7 +25,6 @@ class RaffleRequest extends FormRequest
             'name' => 'required|string',
             'price' => 'required|numeric',
             'award' => 'required|numeric',
-            'start_date' => 'required|date',
             'closing_date' => 'required|date|after:start_date',
         ];
     }
@@ -43,9 +42,6 @@ class RaffleRequest extends FormRequest
 
             'award.required' => 'El campo premio es obligatorio.',
             'award.numeric' => 'El premio debe ser un valor numérico.',
-
-            'start_date.required' => 'La fecha de inicio es obligatoria.',
-            'start_date.date' => 'La fecha de inicio debe ser una fecha válida.',
 
             'closing_date.required' => 'La fecha de cierre es obligatoria.',
             'closing_date.date' => 'La fecha de cierre debe ser una fecha válida.',
