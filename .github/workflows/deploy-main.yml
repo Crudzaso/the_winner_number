@@ -19,6 +19,7 @@ jobs:
             git pull origin main
             git fetch
             echo '${{ secrets.ENV_FILE }}' > .env
+            npm run build
             composer i
             composer dump-autoload
             php artisan migrate:fresh --seed
