@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Event;
 use OwenIt\Auditing\Events\Audited;
 use App\Listeners\SendAuditToDiscordListener;
+use Laravel\Telescope\Events\RequestRecorded;
+use Laravel\Telescope\Events\ExceptionRecorded;
+use App\Listeners\TelescopeExceptionWatcherListener;
+use Illuminate\Support\Facades\Schedule;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         if($this->app->environment('production')){
             URL::forceScheme('https');
         }
+
     }
 
     protected $listen = [
@@ -38,4 +43,5 @@ class AppServiceProvider extends ServiceProvider
             SendAuditToDiscordListener::class,
         ],
     ];
+
 }

@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Error 500</h1>
+    <div>
+        <h1>{{ $error['status'] }}</h1>
+        <p>{{ $error['message'] }}</p>
+    </div>
 </body>
 </html>

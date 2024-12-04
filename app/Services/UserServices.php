@@ -46,7 +46,7 @@ class UserServices
         $user->save();
         $user->assignRole($request->role);
         
-        return redirect()->route('user.index', 'users')->with('success', 'Raffle created successfully.');
+        return redirect()->route('user.index')->with('success', 'Raffle created successfully.');
     }
 
     public function showServices(string $id)
@@ -57,6 +57,7 @@ class UserServices
 
     public function editServices(string $id)
     {
+        
         $user = User::with('roles')->find($id);
         $roles = Role::all();
         return view('viewtemplate.userEdit', compact('user', 'roles'));

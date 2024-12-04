@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\RoleServices;
 use App\Services\ErrorServices;
+use App\Http\Requests\RoleRequest;
+use App\Http\Requests\RoleUpdateRequest;
 
 class RoleController extends Controller
 {
@@ -40,7 +42,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         return  $this->errorServices->handleError(function()use($request){return $this->roleServices->storeServices($request);});        
     }
@@ -56,7 +58,7 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RoleUpdateRequest $request, string $id)
     {
         return  $this->errorServices->handleError(function()use($request, $id){return $this->roleServices->updateServices($request, $id);});
     }
@@ -69,8 +71,13 @@ class RoleController extends Controller
         return  $this->errorServices->handleError(function()use($id){return $this->roleServices->destroyServices($id);});
     }
 
-    public function Revoke(string $id, string $role)
+    public function revokeRole(string $id, string $role)
     {
-        return  $this->errorServices->handleError(function()use($id, $role){return $this->roleServices->revokeServices($id, $role);});
+        return  $this->errorServices->handleError(function()use($id, $role){return $this->roleServices->revokeRoleServices($id, $role);});
+    }
+
+    public function assignRole(string $id, string $role)
+    {
+        return  $this->errorServices->handleError(function()use($id, $role){return $this->roleServices->assignRoleServices($id, $role);});
     }
 }

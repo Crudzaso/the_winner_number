@@ -52,9 +52,10 @@
                     @endcan
                 @endif
                 @can('purchases.store')
-                    <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a><br>
+                    @if ($raffle->user->id != auth()->user()->id)
+                        <a href="{{ route('purchase.create', $raffle->id) }}">comprar</a><br>
+                    @endif
                 @endcan
-
             </div>
         @empty
             <h4>No hay datos que mostrar</h4>

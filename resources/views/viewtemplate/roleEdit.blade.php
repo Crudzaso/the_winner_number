@@ -21,7 +21,7 @@
             <label for="permissions">Permisos:</label>
             <select name="permissions[]" id="permissions" multiple>
                 @foreach($permissions as $permission)
-                    <option value="{{ $permission->id }}" 
+                    <option value="{{ $permission->name }}" 
                             @if($role->permissions->contains($permission)) selected @endif>
                         {{ $permission->name }}
                     </option>

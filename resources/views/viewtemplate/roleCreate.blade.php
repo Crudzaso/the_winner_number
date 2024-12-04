@@ -13,15 +13,21 @@
         <div>
             <label for="name">Nombre del Rol:</label>
             <input type="text" name="name" id="name" required>
+            @error('name')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
             <label for="permissions">Permisos:</label>
             <select name="permissions[]" id="permissions" multiple>
                 @foreach($permissions as $permission)
-                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                    <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                 @endforeach
             </select>
+            @error('permissions')
+            <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('raffle_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('raffle_id')->constrained()->onDelete('cascade');
             $table->integer('number');
             $table->timestamps();
         });
