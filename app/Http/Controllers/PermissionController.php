@@ -19,7 +19,7 @@ class PermissionController extends Controller
         ErrorServices $errorServices
     )
     {
-        $this->purchaseServices = $purchaseServices;
+        $this->permissionsServices = $permissionsServices;
         $this->errorServices = $errorServices;
     }
 
@@ -31,9 +31,9 @@ class PermissionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create()
     {
-        return $this->errorServices->handleError(function()use($id){return $this->permissionsServices->createServices($id);});
+        return $this->errorServices->handleError(function(){return $this->permissionsServices->createServices();});
 
     }
 
@@ -45,9 +45,9 @@ class PermissionController extends Controller
         return $this->errorServices->handleError(function()use($request){return $this->permissionsServices->storeServices($request);});
     }
 
-    public function edit()
+    public function edit(Permission $permission)
     {
-        return $this->errorServices->handleError(function(){return $this->permissionsServices->editServices();});
+        return $this->errorServices->handleError(function()use($permission){return $this->permissionsServices->editServices($permission);});
     }
 
     public function update()
@@ -55,8 +55,19 @@ class PermissionController extends Controller
         return $this->errorServices->handleError(function(){return $this->permissionsServices->updateServices();});
     }
     
-    public function destroy(Role $role, Permission $permission)
+    public function destroy(User $user, Permission $permission)
     {
-        return $this->errorServices->handleError(function()use($role, $permission){return $this->permissionsServices->destroyServices($role, $permission);});
+        return $this->errorServices->handleError(function()use($user, $permission){return $this->permissionsServices->destroyServices($user, $permission);});
     }
+
+    public function revokePermission(string $model, string $id, Permission $permission)
+    {
+        return $this->errorServices->handleError(function()use($model, $id, $permission){return $this->permissionsServices->revokePermissionServices($model, $id, $permission);});
+    }
+
+    public function assignPermission(string $model, string $id, Permission $permission)
+    {
+        return $this->errorServices->handleError(function()use($model, $id, $permission){return $this->permissionsServices->assignPermissionServices($model, $id, $permission);});
+    }
+
 }

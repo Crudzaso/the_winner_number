@@ -35,7 +35,7 @@ class RaffleServices
         $user = Auth::user();        
 
         if($user->getRoleNames()->first() == 'organizer') {
-            $raffles = Raffle::with('user')->where('user_id', $user->id )->orderBy('closing_date', 'asc')->paginate(10);
+            $raffles = Raffle::with('user')->where('user_id', $user->id )->where('status', true)->orderBy('closing_date', 'asc')->paginate(10);
         }else {
             return redirect()->back()->with('error', 'Esta ruta no esta disponible para ti.');
         }
@@ -46,7 +46,7 @@ class RaffleServices
 
     public function createServices()
     {
-        return view('viewtemplate.raffleCreate');
+        return route('raffle.store');
     }
 
     public function storeServices(RaffleRequest $request)
@@ -61,7 +61,7 @@ class RaffleServices
             'user_id' => $user->id,
         ]);
         $user->increment('raffles_created_count');
-        return redirect()->route('raffle.index')->with('success', 'Raffle created successfully.');
+        return redirect()->route('raffle.index')->with('success', 'Rifa creada exitosamente.');
     }
 
     public function showServices(string $id)
@@ -93,7 +93,7 @@ class RaffleServices
         $raffle = Raffle::with('purchases', 'user')->find($id);
 
         if (!$raffle) {
-            return view('viewtemplate.notFound')->with('error', 'Rifa no encontrado.');
+            return view('viewtemplate.notFound')->with('error', 'Rifa no encontrada.');
         }
         if($raffle->user->id != Auth::user()->id){
             return back()->with('error', 'Estas autorizado para para Modificar esta rifa.');
@@ -102,18 +102,18 @@ class RaffleServices
             return back()->with('error', 'Esta Rifa no puede ser editada.');
         }
         $raffle->update($request->all());
-        return redirect()->route('raffle.index')->with('success', 'Raffle updated successfully.');
+        return redirect()->route('raffle.index')->with('success', 'Rifa actualizada exitosamente.');
     }
 
     public function destroyServices(string $id)
     {
         $user = Auth::user();
         $raffle = Raffle::with('user', 'purchases')->find($id);
-        if($raffle->user->id != Auth::user()->id){
-            return back()->with('error', 'Estas autorizado para para Eliminar esta rifa.');
-        }
         if (!$raffle) {
             return view('viewtemplate.notFound')->with('error', 'Rifa no encontrada.');
+        }
+        if($raffle->user->id != Auth::user()->id){
+            return back()->with('error', 'No estas autorizado para para Eliminar esta rifa.');
         }
         if(!$raffle->purchases->isEmpty()) 
         {
@@ -124,6 +124,6 @@ class RaffleServices
         ]);
         $user->decrement('raffles_created_count');
         
-        return back()->with('success', 'Raffle deleted successfully.');
+        return back()->with('success', 'Rifa eliminada exitosamente.');
     }
 }

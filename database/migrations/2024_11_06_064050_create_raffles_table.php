@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('start_date')->nullable(false);
             $table->date('closing_date')->nullable(false);
             $table->float('award')->nullable(false);
-            $table->unsignedInteger('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

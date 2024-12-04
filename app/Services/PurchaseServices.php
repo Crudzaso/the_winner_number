@@ -34,7 +34,7 @@ class PurchaseServices
         $raffle = Raffle::find($id);
 
         if (!$raffle) {
-            return view('viewtemplate.notFound')->with('error', 'Rifa no encontrado.');
+            return route('raffle.index')->with('error', 'Rifa no encontrada.');
         }
 
         $purchases = Purchase::where('raffle_id', $raffle->id)->pluck('number')->toArray();  
@@ -46,7 +46,7 @@ class PurchaseServices
     {
         $raffle = Raffle::find($request->raffle_id);
         if (!$raffle) {
-            return view('viewtemplate.notFound')->with('error', 'Rifa no encontrado.');
+            return route('raffle.index')->with('error', 'Rifa no encontrada.');
         }
 
         $user = Auth::user();
@@ -66,7 +66,7 @@ class PurchaseServices
     {
         $purchase = Purchase::with('user', 'raffle')->find($id);
         if (!$purchase) {
-            return view('viewtemplate.notFound')->with('error', 'compra no encontrada.');
+            return route('raffle.index')->with('error', 'compra no encontrada.');
         }
         return view('viewtemplate.purchaseShow', compact('purchase'));
     }

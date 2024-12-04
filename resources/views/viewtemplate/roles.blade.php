@@ -26,16 +26,16 @@
                         @foreach($role->permissions as $permission)
                             {{ $permission->name }}
                             @if (!$loop->last), @endif
-                            <form action="{{ route('permissions.destroy', $role->id, $permission->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('permissions.revokepermission', ['model' => 'role', 'id' => $role->id, 'permission' => $permission->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Are you sure you want to delete this permission?')">Delete</button>
+                                <button type="submit">eliminar</button>
                             </form>
                         @endforeach
                     </td>
                     <td>
                         <a href="{{ route('roles.edit', $role->id) }}">Editar</a>
-                        <form action="{{ route('roles.destroy', $role->id ) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('roles.destroy', $role->id ) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>

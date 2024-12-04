@@ -6,6 +6,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Services\ErrorServices;
 use App\Http\Requests\RoleRequest;
+use App\Http\Requests\RoleUpdateRequest;
 
 class RoleServices
 {
@@ -44,10 +45,6 @@ class RoleServices
      */
     public function storeServices(RoleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:roles,name',
-            'permissions' => 'array',
-        ]);
 
         $role = Role::create(['name' => $request->name]);
 
@@ -75,12 +72,8 @@ class RoleServices
     /**
      * Update the specified resource in storage.
      */
-    public function updateServices(RoleRequest $request, string $id)
+    public function updateServices(RoleUpdateRequest $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|unique:roles,name,' . $id,
-            'permissions' => 'array',
-        ]);
 
         $role = Role::findOrFail($id);
         $role->update(['name' => $request->name]);
@@ -101,25 +94,25 @@ class RoleServices
         $role = Role::find($id);
 
         if ($role) {
-            $usersWithRole = User::role($role->name)->get();
-
-            foreach ($usersWithRole as $user) {
-                $user->removeRole($roleName);
-            }
-
-            return "El rol '{$roleName}' fue removido de todos los usuarios que lo tenían.";
+            $role->delete();
+            return redirect()->route('roles.index')->with('success', 'Rol eliminado con éxito.');
         } else {
-            return "El rol '{$roleName}' no existe.";
+            return "El rol '{$role->name}' no existe.";
         }
-
-        return redirect()->route('roles.index')->with('success', 'Rol eliminado con éxito.');
     }
 
-    /*public function RevokeServices(string $id, string $role)
+    public function revokeRoleServices(string $id, string $role)
     {
         $user = User::find($id);
         $user->removeRole($role);
         return redirect()->route('roles.index')->with('success', 'Rol eliminado con éxito.');
-    }*/
+    }
+
+    public function assignRoleServices(string $id, string $role)
+    {
+        $user = User::find($id);
+        $user->assignRole($role);
+        return redirect()->route('roles.index')->with('success', 'Rol asignado con éxito.');
+    }
 
 }
