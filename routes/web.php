@@ -3,11 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Laravel\Socialite\Facades\Socialite;
+
 use App\Http\Controllers\RaffleController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\MercadoPagoController;
+
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -15,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//ROUTES FOR CHECK THE LAYOUTS
+    //ROUTES FOR CHECK THE LAYOUTS
 Route::get("/componente", function(){
     return view('components.prueba-layout');
 });
@@ -30,10 +33,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
 });
 
-// Ruta para redirigir a Google
+    // Ruta para redirigir a Google
 Route::get('/auth/google', [AuthenticatedSessionController::class, 'redirectToGoogle'])->name('auth.google');
 
-// Ruta para manejar la respuesta de Google
+    // Ruta para manejar la respuesta de Google
 Route::get('/auth/google/callback', [AuthenticatedSessionController::class, 'handleGoogleCallback']);
 
 Route::view('/view','viewtemplate.viewlogin');
@@ -87,3 +90,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
     });
 });
+
+    //Rutas para el procesamiento de la información desde Mercado Pago
+Route::post('/create-preference', [MercadoPagoController::class, 'createPaymentPreference']);
+Route::get('/mercadopago-payments', [MercadoPagoController::class, 'payForm'])->name('mercadopago.payments');
+Route::get('/mercadopago/success', [MercadoPagoController::class, 'success'])->name('mercadopago.success');
+Route::get('/mercadopago/failed', [MercadoPagoController::class, 'failed'])->name('mercadopago.failed');
+/*Route::get('/mercadopago-payments', function(){
+    return view ('mercadoPagoComponent');
+})->name('mercadopago.payments');*/

@@ -16,19 +16,22 @@ class UserController extends Controller
     private ErrorServices $errorServices;
 
     public function __construct(
-        UserServices $userServices,
+        UserServices  $userServices,
         ErrorServices $errorServices
     )
     {
         $this->userServices = $userServices;
         $this->errorServices = $errorServices;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(string $status)
     {
-        return  $this->errorServices->handleError(function()use($status){return $this->userServices->indexServices($status);});
+        return $this->errorServices->handleError(function () use ($status) {
+            return $this->userServices->indexServices($status);
+        });
     }
 
     /**
@@ -36,7 +39,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return  $this->errorServices->handleError(function(){return $this->userServices->createServices();});
+        return $this->errorServices->handleError(function () {
+            return $this->userServices->createServices();
+        });
     }
 
     /**
@@ -44,7 +49,9 @@ class UserController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        return  $this->errorServices->handleError(function()use($request){return $this->userServices->storeServices($request);});        
+        return $this->errorServices->handleError(function () use ($request) {
+            return $this->userServices->storeServices($request);
+        });
     }
 
     /**
@@ -52,7 +59,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return  $this->errorServices->handleError(function()use($id){return $this->userServices->showServices($id);});
+        return $this->errorServices->handleError(function () use ($id) {
+            return $this->userServices->showServices($id);
+        });
     }
 
     /**
@@ -60,15 +69,19 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return  $this->errorServices->handleError(function()use($id){return $this->userServices->editServices($id);});
+        return $this->errorServices->handleError(function () use ($id) {
+            return $this->userServices->editServices($id);
+        });
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request,string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
-        return  $this->errorServices->handleError(function()use($request, $id){return $this->userServices->updateServices($request, $id);});
+        return $this->errorServices->handleError(function () use ($request, $id) {
+            return $this->userServices->updateServices($request, $id);
+        });
     }
 
     /**
@@ -76,16 +89,22 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        return  $this->errorServices->handleError(function()use($id){return $this->userServices->destroyServices($id);});
+        return $this->errorServices->handleError(function () use ($id) {
+            return $this->userServices->destroyServices($id);
+        });
     }
 
     public function formInformationUser()
     {
-        return  $this->errorServices->handleError(function(){return $this->userServices->formInformationUserServices();});
+        return $this->errorServices->handleError(function () {
+            return $this->userServices->formInformationUserServices();
+        });
     }
 
     public function completeRegistration(UserRequest $request)
     {
-        return  $this->errorServices->handleError(function()use($request){return $this->userServices->completeRegistrationServices($request);});
+        return $this->errorServices->handleError(function () use ($request) {
+            return $this->userServices->completeRegistrationServices($request);
+        });
     }
 }
