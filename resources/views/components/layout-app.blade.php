@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/layout-styles.css') }}">
-    
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
 <body>
     <div class="hero-homepage">
         <header id="header" class="">
-            <a href=""><img src="./public/logo_winner_number-removebg-preview.png" alt=""></a>
+            <a href=""><img src="{{ asset('images/logo.png') }}" alt=""></a>
       
           <nav class="desktop-nav hidden xl:flex">
             <a href="">Inicio</a>
@@ -27,7 +27,7 @@
           <div>
             
           </div>
-          <button id="toggle-header" class="flex xl:hidden w-20 mt-5"><img src="{{ asset('images/logo.png') }}" alt=""></button>
+          <button id="toggle-header" class="flex xl:hidden w-20 mt-5"><img src="https://cdn-icons-png.flaticon.com/512/9451/9451364.png" alt=""></button>
         </header>
         <nav class="mobile-nav hidden bg-black xl:hidden" id="mobile-nav">
           <a href="">Inicio</a>
@@ -39,41 +39,7 @@
             <a href="">Iniciar sesion</a>
             <a href="">Registrarse</a>
           </div>
-        </nav>
-    
-        <main>
-          <section class="hero-home-text">
-              <article class="hero-info-home">
-                <h2>La pagina <span>#1 de rifas</span> a nivel nacional</h2>
-                <p>The winner number es una plataforma Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo asperiores ipsa rerum sit repellat ea at accusantium. Rerum reiciendis cupiditate non, nihil, delectus eligendi unde expedita nam esse repellat consequatur!</p>
-                <div class="stats-containers-home">
-                  <div>
-                    <h4>400+</h4>
-                    <p>Premios entregados</p>
-                </div>
-                <div>
-                  <h4>400+</h4>
-                  <p>Premios entregados</p>
-              </div>
-                <div>
-                  <h4>200k+</h4>
-                  <p>Boletos vendidos en el año</p>
-              </div>
-                </div>
-              </article>
-              <article class="hero-form-register-home">
-                <h3><span>Descubre</span> Gran cantidad de oportunidades de ganar dia a dia</h3>
-                <form action="">
-                  <input type="text" placeholder="Nombre">
-                  <input type="text" placeholder="Nombre">
-                  <input type="text" placeholder="Nombre">
-                  <input type="text" placeholder="Nombre">
-                  <button>Registrarme</button>
-                  <button>Registrarme con google</button>
-                </form>
-              </article>
-          </section>
-          </div>
+        </nav>         
         <main>
             {{$slot}}
         </main>
@@ -94,6 +60,6 @@
             </div>
             <p class="copy-message">Todos los derechos reservados || The winner number</p>
           </footer>
-    
+          <script src="{{ asset('js/main-layout.js') }}"></script>
 </body>
 </html>
