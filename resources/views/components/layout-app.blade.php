@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('css/home-layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/layout-styles.css') }}">
     
     <title>Document</title>
 </head>
@@ -27,7 +27,7 @@
           <div>
             
           </div>
-          <button id="toggle-header" class="flex xl:hidden w-20 mt-5"><img src="https://cdn-icons-png.flaticon.com/512/9451/9451364.png" alt=""></button>
+          <button id="toggle-header" class="flex xl:hidden w-20 mt-5"><img src="{{ asset('images/logo.png') }}" alt=""></button>
         </header>
         <nav class="mobile-nav hidden bg-black xl:hidden" id="mobile-nav">
           <a href="">Inicio</a>
@@ -78,7 +78,7 @@
             {{$slot}}
         </main>
         <footer>
-            <img class="transparency-img" src="./public/transparency.jpg" alt="">
+            <img class="transparency-img" src="{{ asset('images/transparency.jpg') }}" alt="">
             <div class="footer-content">
               <div>
                 <h5>Contacto:</h5>
