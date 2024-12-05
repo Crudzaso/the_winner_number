@@ -6,53 +6,18 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Configure Git Safe Directory
-        run: |
-          git config --global --add safe.directory $GITHUB_WORKSPACE
-
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy to Server
-        uses: appleboy/ssh-action@v0.1.10
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            set -e
             cd "${{ secrets.PATH }}"
-            
-            # Configurar safe directory en el servidor
-            git config --global --add safe.directory "${{ secrets.PATH }}"
-            
-            # Hacer pull y fetch con manejo de errores
-            git fetch origin main
-            git reset --hard origin/main
-            
-            # Crear .env de forma segura
+            git pull origin main
+            git fetch
             echo '${{ secrets.ENV_FILE }}' > .env
-            chmod 600 .env
-            
-            # Instalar dependencias
-            composer install --no-interaction --prefer-dist --optimize-autoloader
-            
-            # Limpiar caché y optimizar
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan view:clear
-            
-            # Migrar base de datos
-            php artisan migrate --force
-            
-            # Optimizar aplicación
-            php artisan optimize
+            composer i
+            composer dump-autoload
+            php artisan migrate:fresh --seed
+            php artisan optimize:clear
