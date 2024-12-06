@@ -1,0 +1,152 @@
+.container-user-profile{
+    background-image: linear-gradient(to bottom, #030207, #2e0533);
+  }
+  
+  .info-user-data{
+    margin-top: 5vh;
+    padding-top: 12vh;
+    display: flex;
+    justify-content: space-around;
+    h3{
+      color: white;
+      font-size: 21px;
+    }
+  }
+  
+  .form-container {
+    position: relative;
+    z-index: 1;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .main-title-user-view{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    margin-top: 3vh;
+    color: white;
+  }
+  
+  .form-user {
+    max-width: 700px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+  
+    label {
+      margin-top: 15px;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color:rgb(255, 255, 255);
+    }
+    input {
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid black;
+      color: #ffffff !important;
+      padding: 10px 5px;
+      border-radius: 0px;
+      font-size: 17px;
+      margin-bottom: 21px;
+      width: 100%;
+      display:  flex;
+      align-items: center;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #bb00ff;
+    }
+  }
+  .i{
+    color: #ffffff !important;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .password-container input {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 5px;
+    padding-bottom: 25px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .toggle-password:focus {
+    outline: none;
+  }
+  
+  .submit-btn {
+    margin-top: 5vh;
+    padding: 10px 20px;
+    height: 44px;
+    background-color: #00000068;
+    border: 1px solid white;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    cursor: pointer;
+    align-self: center;
+  
+    &:hover{
+      background-color: #646cff;
+      border: none;
+    }
+    
+  }
+  
+  .submit-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  @media(max-width:1000px){
+    .form-user {
+        width: 80%;
+      }
+  }
+  
+  @media(max-width:500px){
+    .form-user {
+        width: 95%;
+      }
+  }
+  
+  /* TABLA RIFAS */
+  
+  .table-purchased-container{
+    margin-top: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5vh;
+  }
+  .table-lotteries-purchased{
+    margin-top: 3vh;
+    width: 75% !important;
+  }
+  
+  @media(max-width:650px){
+    .table-lotteries-purchased{
+        width: 100% !important;
+      }
+  }
+  
