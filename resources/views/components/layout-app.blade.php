@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/layout-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/details-lottery.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
@@ -29,7 +30,7 @@
           </div>
           <button id="toggle-header" class="flex xl:hidden w-20 mt-5"><img src="https://cdn-icons-png.flaticon.com/512/9451/9451364.png" alt=""></button>
         </header>
-        <nav class="mobile-nav hidden bg-black xl:hidden" id="mobile-nav">
+        <nav class="mobile-nav hidden bg-black xl:hidden z-50" id="mobile-nav">
           <a href="">Inicio</a>
           <a href="">Rifas activas</a>
           <a href="">Rifas jugadas</a>
