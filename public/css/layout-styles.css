@@ -676,4 +676,8 @@ main{
     }
   }
 }
+iframe{
+  width: 200px;
+  height: 200px;
+}
 }

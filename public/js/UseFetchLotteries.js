@@ -1,4 +1,4 @@
-const printDataIntoContainer = (container) => {
+const printDataIntoContainer = (container, lottery) => {
       container.innerHTML += `
         <article class="played-lottery-card">
           <h4>Lotería del Año</h4>
@@ -20,10 +20,7 @@ const printDataIntoContainer = (container) => {
   
      if (containerOfPlayedLotteries) {
        data.forEach(lottery => {
-         console.log(lottery);
-         printDataIntoContainer(containerOfPlayedLotteries);
-         console.log(containerOfPlayedLotteries);
-         
+         printDataIntoContainer(containerOfPlayedLotteries,lottery);         
        });
      } else {
        console.error('No se encontró el contenedor de loterias');
