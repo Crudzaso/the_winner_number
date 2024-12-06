@@ -48858,7 +48858,7 @@ body,
   display: none;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 100px) {
   .app-sidebar {
     display: flex;
     flex-shrink: 0;
