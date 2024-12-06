@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\MercadoPagoController;
+use App\Http\Controllers\MiMercadoPagoController;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -92,10 +93,7 @@ Route::middleware('auth')->group(function () {
 });
 
     //Rutas para el procesamiento de la información desde Mercado Pago
-Route::post('/create-preference', [MercadoPagoController::class, 'createPaymentPreference']);
-Route::get('/mercadopago-payments', [MercadoPagoController::class, 'payForm'])->name('mercadopago.payments');
-Route::get('/mercadopago/success', [MercadoPagoController::class, 'success'])->name('mercadopago.success');
-Route::get('/mercadopago/failed', [MercadoPagoController::class, 'failed'])->name('mercadopago.failed');
-/*Route::get('/mercadopago-payments', function(){
-    return view ('mercadoPagoComponent');
-})->name('mercadopago.payments');*/
+Route::get('mercadopago/pagar', [MiMercadoPagoController::class, 'showPaymentForm'])->name('mercadopago.payment');
+Route::post('mercadopago/crear-pago', [MiMercadoPagoController::class, 'createPayment'])->name('mercadopago.createPayment');
+Route::get('mercadopago/success', [MiMercadoPagoController::class, 'success'])->name('mercadopago.success');
+Route::get('mercadopago/failure', [MiMercadoPagoController::class, 'failure'])->name('mercadopago.failed');

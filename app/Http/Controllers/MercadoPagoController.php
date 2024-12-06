@@ -67,7 +67,7 @@ class MercadoPagoController extends Controller
             throw new Exception("El token de acceso de Mercado Pago no está configurado.");
         }
         MercadoPagoConfig::setAccessToken($mpAccessToken);
-        MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);
+        /*MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);*/
     }
 
         // Función para crear la estructura de preferencia
@@ -83,6 +83,16 @@ class MercadoPagoController extends Controller
             'success' => route('mercadopago.success'),
             'failure' => route('mercadopago.failed')
         ];
+        /*$items = [
+            [
+                "id" => $items['id'],
+                "title" => $items['title'],
+                "description" => $items['description'],
+                "quantity" => $items['quantity'],
+                "unit_price" => $items['unit_price'],
+                "currency_id" => "COP",
+            ]
+        ];*/
 
         $request = [
             "items" => $items,
