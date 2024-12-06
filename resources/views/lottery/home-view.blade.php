@@ -159,37 +159,7 @@
     </section>
     <section class="played-loteries-container">
       <h2 class="lottery-container-title-home">Loterías jugadas</h2>
-      <div class="lottery-container">
-        <article class="played-lottery-card">
-          <h4>Lotería del Año</h4>
-          <p>12/12/2024</p>
-          <p>Ganador: 1234567890</p>
-          <a href="">Ver detalles</a>
-        </article>
-        <article class="played-lottery-card">
-          <h4>Lotería del Año</h4>
-          <p>12/12/2024</p>
-          <p>Ganador: 1234567890</p>
-          <a href="">Ver detalles</a>
-        </article>
-        <article class="played-lottery-card">
-          <h4>Lotería del Año</h4>
-          <p>12/12/2024</p>
-          <p>Ganador: 1234567890</p>
-          <a href="">Ver detalles</a>
-        </article>
-        <article class="played-lottery-card">
-          <h4>Lotería del Año</h4>
-          <p>12/12/2024</p>
-          <p>Ganador: 1234567890</p>
-          <a href="">Ver detalles</a>
-        </article>
-        <article class="played-lottery-card">
-          <h4>Lotería del Año</h4>
-          <p>12/12/2024</p>
-          <p>Ganador: 1234567890</p>
-          <a href="">Ver detalles</a>
-        </article>
+      <div class="lottery-container" id="lottery-container-playedd">
         <article class="played-lottery-card">
           <h4>Lotería del Año</h4>
           <p>12/12/2024</p>
@@ -211,4 +181,5 @@
         <img src="https://media.istockphoto.com/id/1346944001/es/foto/primer-plano-de-compa%C3%B1eros-de-trabajo-apilando-sus-manos-juntas.jpg?s=612x612&w=0&k=20&c=TLFYe08PCI1tAcsuB1EwKlIKC74eFAwC7jAF2ssHVl0=" alt="">
       </article>
     </section>
+    <script src="{{ asset('js/UseFetchLotteries.js') }}"></script>  
 </x-layout-app>

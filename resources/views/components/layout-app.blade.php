@@ -60,6 +60,6 @@
             </div>
             <p class="copy-message">Todos los derechos reservados || The winner number</p>
           </footer>
-          <script src="{{ asset('js/main-layout.js') }}"></script>
+   <script src="{{ asset('js/main-layout.js') }}"></script>       
 </body>
 </html>
