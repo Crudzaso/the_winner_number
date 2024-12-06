@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Http;
 
 class DiscordServices
 {
+    protected $webhookUrl;
+
+    public function __construct(){
+        $this->webhookUrl = config('services.discord.webhook_url');
+    }
 
     public function discordNotification($tittle ,$typeMessage, $authMethod, $userId, $userName, $userEmail, $userRole, $notificationMessage)
     {
@@ -124,7 +129,7 @@ class DiscordServices
 
         $this->sendDiscordMessageNotification($webhookUrl,$message);
     }
-    
+
 
     public function discordAuditingNotification($event, $auditable_type, $auditable_id, $old_values, $new_values, $user_id, $created_at)
     {
