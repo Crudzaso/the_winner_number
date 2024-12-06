@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
-    return view('lottery.user-profile');
+    return view('components.prueba-layout');
 });
 
 //ROUTES FOR CHECK THE LAYOUTS

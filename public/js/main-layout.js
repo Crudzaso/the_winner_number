@@ -5,7 +5,7 @@ const headerToggle = document.querySelector("#toggle-header")
 const mobileNav = document.querySelector("#mobile-nav")
 
 
-console.log(header);
+
 
 window.addEventListener("scroll", function(){
     if (window.scrollY > 50) {

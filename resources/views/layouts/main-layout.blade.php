@@ -1,60 +1,16 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: MetronicProduct Version: 8.2.8
-Purchase: https://1.envato.market/Vm7VRE
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
-	<!--begin::Head-->
 	<head>
 		<title>The winner number</title>
 		<meta charset="utf-8" />
-		<meta name="description" content="The most advanced Tailwind CSS & Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-		<meta name="keywords" content="tailwind, tailwindcss, metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Metronic - The World's #1 Selling Tailwind CSS & Bootstrap Admin Template by KeenThemes" />
-		<meta property="og:url" content="https://keenthemes.com/metronic" />
-		<meta property="og:site_name" content="Metronic by Keenthemes" />
-		<link rel="canonical" href="http://preview.keenthemes.comindex.html" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
-		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 		<link href="{{asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-		<!--end::Global Stylesheets Bundle-->
-		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
+		<script src="https://cdn.tailwindcss.com"></script>
 	</head>
-	<!--end::Head-->
-	<!--begin::Body-->
 	<body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-sidebar-stacked="true" data-kt-app-sidebar-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default">
-		<!--begin::Theme mode setup on page load-->
-		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
-		<!--end::Theme mode setup on page load-->
-		<!--begin::App-->
 		<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
-			<!--begin::Page-->
 			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-				<!--begin::Header-->
-				<div id="kt_app_header" class="app-header d-flex d-lg-none" data-kt-sticky="true" data-kt-sticky-activate="{default: false, lg: true}" data-kt-sticky-name="app-header-sticky" data-kt-sticky-offset="{default: false, lg: '300px'}">
-					<!--begin::Header container-->
-					<div class="app-container container-xxl d-flex align-items-center justify-content-between" id="kt_app_header_container">
-						<!--begin::Logo-->
-						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
-							<a href="index.html">
-								<img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
-							</a>
-						</div>
-						<!--end::Logo-->
-						<!--begin::Header mobile toggle-->
+
 						<div class="d-flex align-items-center d-lg-none ms-2" title="Show sidebar menu">
 							<div class="btn btn-icon btn-color-white bg-white bg-opacity-0 bg-hover-opacity-10 w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
 								<i class="ki-outline ki-abstract-14 fs-2"></i>
@@ -72,10 +28,10 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Sidebar primary-->
 						<div class="app-sidebar-primary">
 							<!--begin::Logo-->
-							<div class="app-sidebar-logo d-none d-md-flex flex-center pt-10 pb-2" id="kt_app_sidebar_logo">
+							<div class="app-sidebar-logo d-none d-md-flex flex-center pt-10 pb-2 " id="kt_app_sidebar_logo">
 								<!--begin::Logo image-->
 								<a href="index.html">
-									<img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
+									<img alt="Logo" src="{{ asset('images/logo.png') }}" class=" w-26" />
 								</a>
 								<!--end::Logo image-->
 							</div>
@@ -87,11 +43,7 @@ License: For each use you must have a valid license purchased only from above li
 									<!--begin:Menu item-->
 									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item here show py-2">
 										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="ki-outline ki-home-2 fs-2x"></i>
-											</span>
-										</span>
+										<img src="https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/What%20is%20a%20Hamburger%20Button.png?width=225&name=What%20is%20a%20Hamburger%20Button.png" id="burguer-button-sidebar" alt="">
 										<!--end:Menu link-->
 										<!--begin:Menu sub-->
 										<div class="menu-sub menu-sub-dropdown px-2 py-4 w-250px mh-75 overflow-auto">
@@ -105,64 +57,7 @@ License: For each use you must have a valid license purchased only from above li
 											</div>
 											<!--end:Menu item-->
 											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link active" href="index.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Default</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="dashboards/ecommerce.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">eCommerce</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="dashboards/projects.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Projects</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="dashboards/online-courses.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Online Courses</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="dashboards/marketing.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Marketing</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
+											
 											<!--end:Menu item-->
 											<div class="menu-inner flex-column collapse" id="kt_app_sidebar_menu_dashboards_collapse">
 												<!--begin:Menu item-->
@@ -188,139 +83,7 @@ License: For each use you must have a valid license purchased only from above li
 													</a>
 													<!--end:Menu link-->
 												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/call-center.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Call Center</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/logistics.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Logistics</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/website-analytics.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Website Analytics</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/finance-performance.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Finance Performance</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/store-analytics.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Store Analytics</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/social.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Social</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/delivery.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Delivery</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/crypto.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Crypto</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/school.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">School</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/podcast.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Podcast</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="landing.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Landing</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
+												
 											</div>
 											<div class="menu-item">
 												<div class="menu-content">
@@ -3284,7 +3047,7 @@ License: For each use you must have a valid license purchased only from above li
 						</div>
 						<!--end::Sidebar primary-->
 						<!--begin::Sidebar secondary-->
-						<div class="app-sidebar-secondary">
+						<div class="app-sidebar-secondary" id="sidebar-to-hidden">
 							<!--begin::Sidebar secondary menu-->
 							<div class="menu menu-sub-indention menu-rounded menu-column menu-active-bg menu-title-gray-600 menu-icon-gray-500 menu-state-primary menu-arrow-gray-500 fw-semibold fs-6 py-4 py-lg-6" id="kt_app_sidebar_secondary_menu" data-kt-menu="true">
 								<div id="kt_app_sidebar_secondary_menu_wrapper" class="hover-scroll-y mx-2 px-2" data-kt-scroll="true" data-kt-scroll-activate="{default: true, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_app_sidebar_secondary_menu" data-kt-scroll-offset="20px">
@@ -3320,199 +3083,7 @@ License: For each use you must have a valid license purchased only from above li
 										</a>
 										<!--end:Menu link-->
 									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/projects.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Projects</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/online-courses.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Online Courses</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/marketing.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Marketing</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/bidding.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Bidding</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/pos.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">POS System</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/call-center.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Call Center</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/logistics.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Logistics</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/website-analytics.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Website Analytics</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/finance-performance.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Finance Performance</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/store-analytics.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Store Analytics</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/social.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Social</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/delivery.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Delivery</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/crypto.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Crypto</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/school.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">School</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="dashboards/podcast.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Podcast</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									<div class="menu-item">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="landing.html">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Landing</span>
-										</a>
-										<!--end:Menu link-->
-									</div>
-									<!--end:Menu item-->
+									
 								</div>
 							</div>
 							<!--end::Sidebar secondary menu-->
@@ -3524,19 +3095,6 @@ License: For each use you must have a valid license purchased only from above li
 						</button>
 						<!--end::Sidebar secondary toggle-->
 					</div>
-
-
-
-
-
-
-					<!--end::Sidebar-->
-
-				<!--Poner comentarios-->
-
-
-
-
 
 
 
@@ -6741,13 +6299,7 @@ License: For each use you must have a valid license purchased only from above li
 			</div>
 			<!--end::Modal dialog-->
 		</div>
-		<!--end::Modal - Invite Friend-->
-		<!--end::Modals-->
-		<!--begin::Javascript-->
-		<script>var hostUrl = "assets/";</script>
-		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-		<script src="assets/plugins/global/plugins.bundle.js"></script>
-		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="{{ asset('js/dashboard.js') }}"></script>     
 	</body>
 	<!--end::Body-->
 </html>
