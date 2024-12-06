@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Event;
 use OwenIt\Auditing\Events\Audited;
 use App\Listeners\SendAuditToDiscordListener;
 
+use Illuminate\Pagination\Paginator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,9 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(DiscordServices::class, function ($app) {
+        /*$this->app->singleton(DiscordServices::class, function ($app) {
             return new DiscordServices(env('DISCORD_WEBHOOK_URL'));
-        });
+        });*/
+
+        Paginator::useBootstrap();
     }
 
     /**
