@@ -46,7 +46,7 @@ class RaffleServices
 
     public function createServices()
     {
-        return route('raffle.store');
+        return view('viewtemplate.raffleCreate');
     }
 
     public function storeServices(RaffleRequest $request)

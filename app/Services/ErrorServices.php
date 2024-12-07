@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
-use App\Services\DiscordServices;
+use App\Facades\DiscordFacade;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
@@ -12,12 +12,7 @@ class ErrorServices
 
     private DiscordServices $discordServices;
 
-    public function __construct(
-        DiscordServices $discordServices
-    )
-    {
-        $this->discordServices = $discordServices;
-    }
+    public function __construct(){}
 
     public function handleError(callable $request)
     {
@@ -46,7 +41,7 @@ class ErrorServices
                 ];
             }
 
-            $this->discordServices->discordErrorNotification(
+            DiscordFacade::discordErrorNotification(
                 $error['status'],
                 $e->getMessage(),
                 $e->getFile(),
