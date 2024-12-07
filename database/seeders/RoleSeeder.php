@@ -23,11 +23,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'purchases.store'])->syncRoles([$participantRole, $organizerRole]);
         Permission::create(['name' => 'purchases.show'])->syncRoles([$participantRole, $organizerRole, $adminRole]);
 
-        Permission::create(['name' => 'raffles.myindex'])->syncRoles([$organizerRole]);
-        Permission::create(['name' => 'raffles.store'])->syncRoles([$organizerRole]);
+        Permission::create(['name' => 'raffles.myindex'])->syncRoles([$organizerRole, $adminRole]);
+        Permission::create(['name' => 'raffles.store'])->syncRoles([$organizerRole, $adminRole]);
         Permission::create(['name' => 'raffles.edit'])->syncRoles([$organizerRole, $adminRole]);
         Permission::create(['name' => 'raffles.destroy'])->syncRoles([$organizerRole, $adminRole]);
-        Permission::create(['name' => 'purchases.sales'])->syncRoles([$organizerRole]);
+        Permission::create(['name' => 'purchases.sales'])->syncRoles([$organizerRole, $adminRole]);
 
         Permission::create(['name' => 'admin.users.index'])->syncRoles([$adminRole]);
         Permission::create(['name' => 'admin.users.store'])->syncRoles([$adminRole]);

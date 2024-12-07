@@ -5,7 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use OwenIt\Auditing\Events\Audited;
-use App\Services\DiscordServices;
+use App\Facades\DiscordFacade;
 
 class SendAuditToDiscordListener
 {
@@ -15,12 +15,7 @@ class SendAuditToDiscordListener
     /**
      * Create the event listener.
      */
-    public function __construct(
-        DiscordServices $discordServices
-    )
-    {
-        $this->discordServices = $discordServices;
-    }
+    public function __construct(){}
 
     /**
      * Handle the event.
@@ -31,7 +26,7 @@ class SendAuditToDiscordListener
     {
         $audit = $event->audit->getAttributes();
     
-        $this->discordServices->discordAuditingNotification(
+        DiscordFacade::discordAuditingNotification(
             $audit['event'], 
             $audit['auditable_type'], 
             $audit['auditable_id'],
