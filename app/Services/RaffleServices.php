@@ -9,6 +9,7 @@ use App\Http\Requests\RaffleRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
+use App\Facades\EmailFacade;
 
 
 class RaffleServices
@@ -61,6 +62,7 @@ class RaffleServices
             'user_id' => $user->id,
         ]);
         $user->increment('raffles_created_count');
+        EmailFacade::raffleCreateMessage($user, $raffle);
         return redirect()->route('raffle.index')->with('success', 'Rifa creada exitosamente.');
     }
 

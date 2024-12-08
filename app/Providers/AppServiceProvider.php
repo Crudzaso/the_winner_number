@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\DiscordServices;
+use App\Services\EmailServices;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Event;
 use OwenIt\Auditing\Events\Audited;
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('DiscordServices', function ($app) {
             return new DiscordServices();
+        });
+        $this->app->singleton('EmailServices', function ($app) {
+            return new EmailServices();
         });
     }
 

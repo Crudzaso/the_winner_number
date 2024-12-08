@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use App\Services\DiscordServices;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
+use App\Facades\EmailFacade;
 
 
 class AuthenticatedSessionController extends Controller
@@ -58,9 +58,11 @@ class AuthenticatedSessionController extends Controller
 
             if ($user->getRoleNames()->isEmpty()) {
                 $user->assignRole('participant');
+                EmailFacade::welcomeMessage($user);
             }
             
             if ($user->status == false) {
+                //Auth::logout();
                 return redirect('/login')->withErrors('error', '⚠️ El usuario ha sido desactivado. Por favor contacte al administrador.');
             }
             

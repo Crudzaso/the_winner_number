@@ -123,4 +123,11 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+        Emails configuration
+    */
+
+    'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+    'MAIL_FROM_NAME' => ('MAIL_FROM_NAME'),
+
 ];

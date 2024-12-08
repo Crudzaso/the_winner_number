@@ -9,6 +9,7 @@ use App\Models\Raffle;
 use App\Http\Requests\PurchaseRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Facades\EmailFacade;
 
 class PurchaseServices
 {
@@ -58,6 +59,8 @@ class PurchaseServices
         ]);
 
         $user->increment('total_spent', $raffle->price);
+
+        EmailFacde::purchaseCreateMessage($user, $raffle);
 
         return redirect()->route('raffle.index')->with('success', 'Compra Realizada');
     }
